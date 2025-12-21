@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/heartcombo/simple_form.git
+  revision: 44384d3ca7c77aef1e56d965b22197af62a80c5f
+  specs:
+    simple_form (5.4.0)
+      actionpack (>= 7.0)
+      activemodel (>= 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -80,6 +88,8 @@ GEM
       mutex_m
       securerandom (>= 0.3)
       tzinfo (~> 2.0)
+    autoprefixer-rails (10.4.21.0)
+      execjs (~> 2)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.5.0)
@@ -87,6 +97,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.19.0)
       msgpack (~> 1.2)
+    bootstrap (5.3.5)
+      popper_js (>= 2.11.8, < 3)
     builder (3.3.0)
     cgi (0.5.1)
     concurrent-ruby (1.3.5)
@@ -105,6 +117,28 @@ GEM
     drb (2.2.3)
     erb (6.0.0)
     erubi (1.13.1)
+    event_stream_parser (1.0.0)
+    execjs (2.10.0)
+    faker (3.5.3)
+      i18n (>= 1.8.11, < 2)
+    faraday (2.14.0)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-multipart (1.1.1)
+      multipart-post (~> 2.0)
+    faraday-net_http (3.4.2)
+      net-http (~> 0.5)
+    ffi (1.17.2-aarch64-linux-gnu)
+    ffi (1.17.2-aarch64-linux-musl)
+    ffi (1.17.2-arm-linux-gnu)
+    ffi (1.17.2-arm-linux-musl)
+    ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
+    ffi (1.17.2-x86_64-linux-musl)
+    font-awesome-sass (6.7.2)
+      sassc (~> 2.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -121,6 +155,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
+    json (2.18.0)
     logger (1.7.0)
     loofah (2.24.1)
       crass (~> 1.0.2)
@@ -135,7 +170,10 @@ GEM
     mini_mime (1.1.5)
     minitest (5.26.2)
     msgpack (1.8.0)
+    multipart-post (2.4.1)
     mutex_m (0.3.0)
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-imap (0.5.12)
       date
       net-protocol
@@ -163,6 +201,8 @@ GEM
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    ostruct (0.6.3)
+    popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -221,7 +261,21 @@ GEM
     responders (3.2.0)
       actionpack (>= 7.0)
       railties (>= 7.0)
+    ruby-openai (8.3.0)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     securerandom (0.4.1)
+    solid_cable (1.0.3)
+      rails (< 9)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -242,6 +296,7 @@ GEM
       railties (>= 6.0.0)
     stringio (3.1.9)
     thor (1.4.0)
+    tilt (2.6.1)
     timeout (0.5.0)
     tsort (0.2.0)
     turbo-rails (2.0.20)
@@ -249,6 +304,7 @@ GEM
       railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (1.1.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -274,13 +330,23 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  autoprefixer-rails
+  bcrypt (~> 3.1.7)
   bootsnap
+  bootstrap (~> 5.2)
   debug
   devise (~> 4.9)
+  faker
+  font-awesome-sass (~> 6.1)
   importmap-rails
   jbuilder
+  ostruct
   puma (>= 5.0)
   rails (~> 7.1.6)
+  ruby-openai
+  sassc-rails
+  simple_form!
+  solid_cable
   sprockets-rails
   sqlite3 (>= 1.4)
   stimulus-rails
