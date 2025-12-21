@@ -1,4 +1,19 @@
 class AppointmentsController < ApplicationController
+  def index
+    head :ok
+  end
+
+  def show
+    head :ok
+  end
+
+  def reschedule
+    head :ok
+  end
+
+  def update_status
+    head :ok
+  end
   def create
     @appointment = Appointment.new(appointment_params)
     if @appointment.save

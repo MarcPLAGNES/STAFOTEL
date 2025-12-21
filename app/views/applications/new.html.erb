@@ -1,0 +1,13 @@
+<h1>Nouvelle candidature</h1>
+<%= form_with(model: @application, url: job_applications_path(@job)) do |f| %>
+  <div>
+    <%= f.label :message, "Message" %>
+    <%= f.text_area :message %>
+  </div>
+  <%= f.hidden_field :job_id, value: @job.id %>
+  <div>
+    <%= f.label :contact_id, "Contact ID" %>
+    <%= f.number_field :contact_id %>
+  </div>
+  <%= f.submit "Postuler" %>
+<% end %>

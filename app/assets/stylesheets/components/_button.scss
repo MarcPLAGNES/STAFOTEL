@@ -1,0 +1,60 @@
+.btn-flat {
+  background-color: #ff6b6b;
+  color: white;
+  padding: 12px 30px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-top: 20px;
+  font: bold;
+}
+
+.btn-flat2 {
+  background-color: #20800d;
+  color: white;
+  padding: 12px 30px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-top: 20px;
+  font: bold;
+}
+
+.btn-flat2-input {
+  background-color: white;
+  color: #20800d;
+  padding: 12px 30px;
+  font-size: 0.8rem;
+  border: 2px solid #20800d;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  margin-top: 20px;
+  width: 350px;
+}
+
+.btn-flat:hover {
+background-color: #ff4757;
+transform: translateY(-3px);
+box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button-container {
+display: flex;
+justify-content: flex-end;
+gap: 20px;
+margin-top: 20px;
+}
+
+.button-before-footer {
+display: flex;
+justify-content: center;
+padding-bottom: 30px;
+}

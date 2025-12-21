@@ -1,20 +1,47 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'pages/home'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Health
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # Pages publiques
   root "pages#home"
+  get "/company", to: "pages#company"
+  get "/tips", to: "pages#tips"
 
-  get "/services", to: "pages#services"
-  get "/societe", to: "pages#about"
-  get "/astuces", to: "pages#tips"
-  get "/metiers", to: "pages#jobs"
+  # Services & devis (shallow for cleaner URLs)
+  resources :services, only: [:index, :show] do
+    resources :quotes, only: [:new, :create], shallow: true
+  end
 
-  resources :quotes, only: [:create]
-  resources :appointments, only: [:create]
-  resources :applications, only: [:create]
+  resources :quotes, only: [:index, :show] do
+    patch :update_status, on: :member
+    resources :appointments, only: [:create], shallow: true
+  end
+
+  # Jobs & candidatures (shallow)
+  resources :jobs, only: [:index, :show] do
+    resources :applications, only: [:new, :create], shallow: true
+  end
+
+  resources :applications, only: [:index, :show] do
+    patch :update_status, on: :member
+  end
+
+  # RDV
+  resources :appointments, only: [:index, :show] do
+    patch :reschedule, on: :member
+    patch :update_status, on: :member
+  end
+
+  # Back-office (compagnie)
+  namespace :admin do
+    root "dashboard#index"
+    resources :quotes
+    resources :applications
+    resources :appointments
+    resources :services
+    resources :jobs
+    resources :contacts
+  end
 end

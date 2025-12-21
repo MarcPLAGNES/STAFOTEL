@@ -1,4 +1,20 @@
 class ApplicationsController < ApplicationController
+  def index
+    head :ok
+  end
+
+  def show
+    head :ok
+  end
+
+  def new
+    @job = Job.find(params[:job_id])
+    @application = Application.new(job: @job)
+  end
+
+  def update_status
+    head :ok
+  end
   def create
     @application = Application.new(application_params)
     if @application.save

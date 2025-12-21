@@ -1,0 +1,13 @@
+<h1>Nouveau devis</h1>
+<%= form_with(model: @quote, url: service_quotes_path(@service)) do |f| %>
+  <div>
+    <%= f.label :message, "Message" %>
+    <%= f.text_area :message %>
+  </div>
+  <%= f.hidden_field :service_id, value: @service.id %>
+  <div>
+    <%= f.label :contact_id, "Contact ID" %>
+    <%= f.number_field :contact_id %>
+  </div>
+  <%= f.submit "Créer le devis" %>
+<% end %>

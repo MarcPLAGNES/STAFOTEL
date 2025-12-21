@@ -1,2 +1,58 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("1.jpg") %>');">
+  <div class="container">
+    <h1><%= image_tag("pokebnb-logo.png", width: 350, height: 180) %></h1>
+    <p><strong>Loue ton deck, domine les tournois!</strong></p>
+    <div class="button-container">
+      <%= link_to "Louer un deck", decks_path, class: "btn btn-flat" %>
+    </div>
+  </div>
+</div>
+
+<h2>"Découvrez nos derniers decks exclusifs et boostez vos performances !"</h2>
+
+<div class="box container">
+  <div id="carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="cards d-flex" alt="First slide">
+          <% @decks1.each do |deck| %>
+            <div class="card-trip">
+              <div><h4><%= deck.title %></h4></div>
+              <%= link_to deck_path(deck) do %>
+                <%= cl_image_tag(deck.photo.key, class: "d-block w-100", height: 400, crop: :fill) %>
+                <div class="card-trip-infos">
+                  <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="cards  d-flex" alt="Second slide">
+          <% @decks2.each do |deck| %>
+            <div class="card-trip">
+              <div><h4><%= deck.title %></h4></div>
+              <%= link_to deck_path(deck) do %>
+                <%= cl_image_tag(deck.photo.key, class: "d-block w-100", height: 400, crop: :fill) %>
+                <div class="card-trip-infos">
+                  <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div>

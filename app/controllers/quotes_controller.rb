@@ -1,4 +1,20 @@
 class QuotesController < ApplicationController
+  def index
+    head :ok
+  end
+
+  def show
+    head :ok
+  end
+
+  def new
+    @service = Service.find(params[:service_id])
+    @quote = Quote.new(service: @service)
+  end
+
+  def update_status
+    head :ok
+  end
   def create
     @quote = Quote.new(quote_params)
     if @quote.save

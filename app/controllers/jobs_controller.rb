@@ -1,2 +1,9 @@
-class JobController < ApplicationController
+class JobsController < ApplicationController
+	def index
+		head :ok
+	end
+
+	def show
+		head :ok
+	end
 end
