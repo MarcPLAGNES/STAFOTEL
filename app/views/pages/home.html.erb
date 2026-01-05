@@ -1,59 +1,48 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("Img1.png") %>');">
   <div class="container">
     <h1><%= image_tag("Logo.png", width: 350, height: 180) %></h1>
-    <p><strong>Loue ton deck, domine les tournois!</strong></p>
-    <div class="button-container">
-      <%= link_to "Louer un deck", jobs_path, class: "btn btn-flat" %>
-    </div>
+    <p><strong>Spécialiste du nettoyage hôtelier et restauration</strong></p>
+    <p class="banner-subtitle">Personnel qualifié, formé et disponible pour vos besoins 7/7j</p>
+  </div>
+  <div class="button-container">
+    <%= link_to "Demander un devis", jobs_path, class: "btn btn-flat" %>
   </div>
 </div>
 
-<h2>"Découvrez nos derniers decks exclusifs et boostez vos performances !"</h2>
+<h2>Découvrez nos métiers</h2>
 
 <div class="box container">
   <div id="carousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <div class="cards d-flex" alt="First slide">
+        <div class="cards d-flex justify-content-center">
           <div class="card-trip">
             <div><h4><%= @job1.title %></h4></div>
             <%= link_to jobs_path(@job1) do %>
               <%= image_tag("job1.png", class: "d-block w-100", height: 400) %>
-              <div class="card-trip-infos">
-                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-              </div>
             <% end %>
           </div>
           <div class="card-trip">
             <div><h4><%= @job2.title %></h4></div>
             <%= link_to jobs_path(@job2) do %>
               <%= image_tag("job2.png", class: "d-block w-100", height: 400) %>
-              <div class="card-trip-infos">
-                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-              </div>
+            <% end %>
+          </div>
+          <div class="card-trip">
+            <div><h4><%= @job3.title %></h4></div>
+            <%= link_to jobs_path(@job3) do %>
+              <%= image_tag("job3.png", class: "d-block w-100", height: 400) %>
             <% end %>
           </div>
         </div>
       </div>
 
       <div class="carousel-item">
-        <div class="cards  d-flex" alt="Second slide">
-          <div class="card-trip">
-            <div><h4><%= @job3.title %></h4></div>
-            <%= link_to jobs_path(@job3) do %>
-              <%= image_tag("job3.png", class: "d-block w-100", height: 400) %>
-              <div class="card-trip-infos">
-                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-              </div>
-            <% end %>
-          </div>
+        <div class="cards d-flex justify-content-center">
           <div class="card-trip">
             <div><h4><%= @job4.title %></h4></div>
             <%= link_to jobs_path(@job4) do %>
               <%= image_tag("job4.png", class: "d-block w-100", height: 400) %>
-              <div class="card-trip-infos">
-                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-              </div>
             <% end %>
           </div>
         </div>
@@ -70,3 +59,52 @@
     </div>
   </div>
 </div>
+
+<h2>Nos services de nettoyages</h2>
+<section class="services-section">
+  <!-- Contenu services -->
+</section>
+
+<h2>Pourquoi nous choisir ?</h2>
+<section class="why-us-section">
+  <div class="cards d-flex justify-content-center">
+    <div class="card-trip card-icon">
+      <div class="card-icon-content">
+        <i class="fas fa-user-check"></i>
+        <h4>Personnel Formé</h4>
+        <p>Équipe professionnelle et qualifiée pour vos besoins</p>
+      </div>
+    </div>
+    <div class="card-trip card-icon">
+      <div class="card-icon-content">
+        <i class="fas fa-clock"></i>
+        <h4>Réactivité 7j/7</h4>
+        <p>Disponible tous les jours de la semaine</p>
+      </div>
+    </div>
+    <div class="card-trip card-icon">
+      <div class="card-icon-content">
+        <i class="fas fa-bolt"></i>
+        <h4>Interventions Rapides</h4>
+        <p>Mobilité et efficacité garanties</p>
+      </div>
+    </div>
+    <div class="card-trip card-icon">
+      <div class="card-icon-content">
+        <i class="fas fa-check-circle"></i>
+        <h4>Contrôle Qualité</h4>
+        <p>Vérification rigoureuse à chaque intervention</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2>Nos astuces pour nettoyer</h2>
+<section class="tips-section">
+  <!-- Contenu astuces -->
+</section>
+
+<h2>Nos clients</h2>
+<section class="clients-section">
+  <!-- Contenu clients -->
+</section>

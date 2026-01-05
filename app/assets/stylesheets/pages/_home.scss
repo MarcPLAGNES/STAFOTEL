@@ -1,13 +1,20 @@
 // Specific CSS for your home-page
 .banner {
-  padding: 100px 0;
+  padding: 0 0 250px 20px;
   text-align: left;
-  background-color: #1a1a1a;
+  background-color: transparent;
   position: relative;
-  padding-left: 50px;
   background-size: cover;
   background-attachment: fixed;
-  background-position: center;
+  background-position: center top;
+}
+
+.banner .container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin-left: 0 !important;
+  margin-right: auto !important;
 }
 
 
@@ -15,26 +22,40 @@
   color: #fff;
   font-size: 3rem;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: -30px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .banner p {
     color: #ddd;
     font-size: 1.5rem;
-    margin-bottom: 30px;
+    margin: 0 0 10px 0;
     max-width: 600px;
     margin-left: 0;
     margin-right: auto;
     font: bold;
     padding-left: 40px;
+    padding-right: 0;
+}
+
+.banner-subtitle {
+  font-size: 0.9rem !important;
+  margin-top: -5px !important;
+  margin-bottom: 30px !important;
 }
 
 h2 {
-  font-size: 15px;
-  background-color: white;
+  font-size: 2.2rem;
+  color: #1a1a1a;
   text-align: center;
-  padding: 30px;
-  font-family: 'Press Start 2P', sans-serif;
+  padding: 50px 30px;
+  font-family: 'Georgia', serif;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background-color: #ffffff;
+  border-bottom: 2px solid #d4af37;
+  margin: 40px 0;
+  position: relative;
 }

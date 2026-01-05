@@ -18,17 +18,17 @@ Job.create!(
 )
 
 Job.create!(
-  title: "Linger",
+  title: "Linger(ère)",
   description: "Entretien et gestion du linge de l'hôtel. Rigueur et sens de l'organisation requis."
 )
 
 Job.create!(
-  title: "Femme de chambre",
+  title: "Valet/Femme de chambre",
   description: "Nettoyage et entretien des chambres. Dynamisme et souci du détail indispensables."
 )
 
 Job.create!(
-  title: "Cafetier",
+  title: "Cafetier(ère)",
   description: "Service et préparation de boissons au bar/café. Expérience souhaitée."
 )
 
