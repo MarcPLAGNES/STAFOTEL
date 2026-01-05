@@ -1,9 +1,9 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("1.jpg") %>');">
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("Img1.png") %>');">
   <div class="container">
-    <h1><%= image_tag("pokebnb-logo.png", width: 350, height: 180) %></h1>
+    <h1><%= image_tag("Logo.png", width: 350, height: 180) %></h1>
     <p><strong>Loue ton deck, domine les tournois!</strong></p>
     <div class="button-container">
-      <%= link_to "Louer un deck", decks_path, class: "btn btn-flat" %>
+      <%= link_to "Louer un deck", jobs_path, class: "btn btn-flat" %>
     </div>
   </div>
 </div>
@@ -15,33 +15,47 @@
     <div class="carousel-inner">
       <div class="carousel-item active">
         <div class="cards d-flex" alt="First slide">
-          <% @decks1.each do |deck| %>
-            <div class="card-trip">
-              <div><h4><%= deck.title %></h4></div>
-              <%= link_to deck_path(deck) do %>
-                <%= cl_image_tag(deck.photo.key, class: "d-block w-100", height: 400, crop: :fill) %>
-                <div class="card-trip-infos">
-                  <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+          <div class="card-trip">
+            <div><h4><%= @job1.title %></h4></div>
+            <%= link_to jobs_path(@job1) do %>
+              <%= image_tag("job1.png", class: "d-block w-100", height: 400) %>
+              <div class="card-trip-infos">
+                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+              </div>
+            <% end %>
+          </div>
+          <div class="card-trip">
+            <div><h4><%= @job2.title %></h4></div>
+            <%= link_to jobs_path(@job2) do %>
+              <%= image_tag("job2.png", class: "d-block w-100", height: 400) %>
+              <div class="card-trip-infos">
+                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
 
       <div class="carousel-item">
         <div class="cards  d-flex" alt="Second slide">
-          <% @decks2.each do |deck| %>
-            <div class="card-trip">
-              <div><h4><%= deck.title %></h4></div>
-              <%= link_to deck_path(deck) do %>
-                <%= cl_image_tag(deck.photo.key, class: "d-block w-100", height: 400, crop: :fill) %>
-                <div class="card-trip-infos">
-                  <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
-                </div>
-              <% end %>
-            </div>
-          <% end %>
+          <div class="card-trip">
+            <div><h4><%= @job3.title %></h4></div>
+            <%= link_to jobs_path(@job3) do %>
+              <%= image_tag("job3.png", class: "d-block w-100", height: 400) %>
+              <div class="card-trip-infos">
+                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+              </div>
+            <% end %>
+          </div>
+          <div class="card-trip">
+            <div><h4><%= @job4.title %></h4></div>
+            <%= link_to jobs_path(@job4) do %>
+              <%= image_tag("job4.png", class: "d-block w-100", height: 400) %>
+              <div class="card-trip-infos">
+                <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
 

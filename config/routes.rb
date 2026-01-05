@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   # Jobs & candidatures (shallow)
-  resources :jobs, only: [:index, :show] do
+  resources :jobs, only: [:index, :show, :new, :create] do
     resources :applications, only: [:new, :create], shallow: true
   end
 
