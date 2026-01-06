@@ -52,6 +52,11 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   border-bottom: 1px solid #d4af37;
+  /* Equalize header height to avoid uneven image spacing */
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-trip h5 {
@@ -108,6 +113,18 @@
   object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+}
+
+/* Force the Service 2 title to a single line to avoid wrap-induced bottom gap */
+#carousel-services .card-trip:nth-child(2) h4 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure images do not leave baseline whitespace */
+.card-trip img {
+  display: block;
 }
 
 // Card with icon style
@@ -169,4 +186,16 @@
     color: #c99d2a;
     transform: scale(1.15);
   }
+}
+
+/* Tips carousel: prevent stretched card and keep image ratio */
+#carousel-tips .card-trip {
+  width: 300px;
+}
+
+#carousel-tips .card-trip img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }

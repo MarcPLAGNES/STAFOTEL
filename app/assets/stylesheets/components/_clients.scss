@@ -1,0 +1,23 @@
+.clients-section {
+  padding: 20px 0;
+}
+
+.clients-section .clients-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.clients-section .partner-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .clients-section .partner-logo {
+    height: 100px;
+  }
+}

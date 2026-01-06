@@ -10,6 +10,7 @@
 
 puts "Nettoyage de la base de données..."
 Job.destroy_all
+Service.destroy_all
 
 puts "Création des jobs..."
 Job.create!(
@@ -33,3 +34,21 @@ Job.create!(
 )
 
 puts "✅ #{Job.count} jobs créés avec succès!"
+
+puts "Création des services..."
+Service.create!(
+  name: "Nettoyage quotidien",
+  price: 45.0
+)
+
+Service.create!(
+  name: "Nettoyage en profondeur",
+  price: 75.0
+)
+
+Service.create!(
+  name: "Service personnalisé",
+  price: 60.0
+)
+
+puts "✅ #{Service.count} services créés avec succès!"
