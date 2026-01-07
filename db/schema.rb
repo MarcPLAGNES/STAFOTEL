@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_07_181717) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_07_202349) do
   create_table "applications", force: :cascade do |t|
     t.string "status"
     t.text "message"
@@ -40,6 +40,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_07_181717) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["email", "user_id"], name: "index_contacts_on_email_and_user_id", unique: true
+    t.index ["user_id"], name: "index_contacts_on_user_id"
   end
 
   create_table "jobs", force: :cascade do |t|
@@ -97,6 +100,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_07_181717) do
   add_foreign_key "applications", "jobs"
   add_foreign_key "appointments", "contacts"
   add_foreign_key "appointments", "quotes"
+  add_foreign_key "contacts", "users"
   add_foreign_key "quotes", "contacts"
   add_foreign_key "quotes", "services"
 end

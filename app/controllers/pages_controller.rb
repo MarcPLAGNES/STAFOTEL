@@ -17,4 +17,8 @@ class PagesController < ApplicationController
 
   def company
   end
+
+  def privacy
+    # Page de politique de confidentialité RGPD
+  end
 end

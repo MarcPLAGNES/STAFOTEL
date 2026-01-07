@@ -9,9 +9,14 @@ Rails.application.routes.draw do
   get "/jobs", to: "pages#jobs"
   get "/company", to: "pages#company"
   get "/tips", to: "pages#tips"
+  get "/contact", to: "contacts#new", as: :contact
+  get "/privacy", to: "pages#privacy", as: :privacy
 
   # Tips
   resources :tips, only: [:show]
+
+  # Contacts
+  resources :contacts, only: [:new, :create]
 
   # Services & devis (shallow for cleaner URLs)
   resources :services, only: [:index, :show] do

@@ -1,0 +1,92 @@
+<div class="container privacy-page">
+  <div class="privacy-header">
+    <h1>Politique de Confidentialité</h1>
+    <div class="header-divider"></div>
+    <p class="header-subtitle">Protection de vos données personnelles</p>
+  </div>
+
+  <div class="privacy-content">
+    <section class="privacy-section">
+      <h2><i class="fas fa-shield-alt"></i> Collecte des données</h2>
+      <p>STAFOTEL collecte les données personnelles suivantes :</p>
+      <ul>
+        <li><strong>Données d'identification :</strong> Nom, prénom, email, téléphone</li>
+        <li><strong>Données de candidature :</strong> Lettre de motivation, CV (si fourni)</li>
+        <li><strong>Données de devis :</strong> Informations sur les services demandés</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2><i class="fas fa-lock"></i> Utilisation des données</h2>
+      <p>Vos données sont utilisées uniquement pour :</p>
+      <ul>
+        <li>Traiter vos demandes de devis</li>
+        <li>Gérer vos candidatures</li>
+        <li>Vous contacter concernant nos services</li>
+        <li>Respecter nos obligations légales</li>
+      </ul>
+      <p class="highlight">
+        <i class="fas fa-exclamation-circle"></i>
+        <strong>Nous ne vendons jamais vos données à des tiers.</strong>
+      </p>
+    </section>
+
+    <section class="privacy-section">
+      <h2><i class="fas fa-clock"></i> Conservation des données</h2>
+      <p>Vos données sont conservées :</p>
+      <ul>
+        <li><strong>Candidatures :</strong> 2 ans après le dernier contact</li>
+        <li><strong>Devis :</strong> Durée légale comptable (10 ans si accepté)</li>
+        <li><strong>Contact simple :</strong> 3 ans maximum</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2><i class="fas fa-user-shield"></i> Vos droits RGPD</h2>
+      <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> Consulter vos données personnelles</li>
+        <li><strong>Droit de rectification :</strong> Corriger vos informations</li>
+        <li><strong>Droit à l'effacement :</strong> Supprimer vos données</li>
+        <li><strong>Droit à la portabilité :</strong> Récupérer vos données</li>
+        <li><strong>Droit d'opposition :</strong> Refuser certains traitements</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous via le formulaire de contact ou par email.</p>
+    </section>
+
+    <section class="privacy-section">
+      <h2><i class="fas fa-server"></i> Sécurité</h2>
+      <p>Nous mettons en œuvre les mesures de sécurité suivantes :</p>
+      <ul>
+        <li>Chiffrement des connexions (HTTPS)</li>
+        <li>Protection contre les attaques CSRF et XSS</li>
+        <li>Accès restreint aux données personnelles</li>
+        <li>Sauvegardes régulières</li>
+        <li>Authentification sécurisée des utilisateurs</li>
+      </ul>
+    </section>
+
+    <section class="privacy-section">
+      <h2><i class="fas fa-cookie-bite"></i> Cookies</h2>
+      <p>Notre site utilise des cookies essentiels pour :</p>
+      <ul>
+        <li>Maintenir votre session connectée</li>
+        <li>Assurer la sécurité de vos données</li>
+        <li>Mémoriser vos préférences</li>
+      </ul>
+      <p>Nous n'utilisons pas de cookies publicitaires ou de tracking.</p>
+    </section>
+
+    <section class="privacy-section highlight-section">
+      <h2><i class="fas fa-envelope"></i> Contact DPO</h2>
+      <p>Pour toute question concernant vos données personnelles :</p>
+      <p><strong>Email :</strong> dpo@stafotel.fr</p>
+      <p class="small-text">Dernière mise à jour : <%= Date.today.strftime("%d/%m/%Y") %></p>
+    </section>
+  </div>
+
+  <div class="privacy-actions">
+    <%= link_to "Retour à l'accueil", root_path, class: "btn-primary" %>
+    <%= link_to "Nous contacter", contact_path, class: "btn-secondary" %>
+  </div>
+</div>

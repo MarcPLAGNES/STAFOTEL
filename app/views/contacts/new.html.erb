@@ -1,0 +1,132 @@
+<div class="container contact-page">
+  <%= link_to root_path, class: "back-link-stylized" do %>
+    <span class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+    <span class="back-text">Retour à l'accueil</span>
+  <% end %>
+
+  <div class="contact-header">
+    <h1>Contactez-nous</h1>
+    <div class="header-divider"></div>
+    <p class="header-subtitle">Nous sommes à votre écoute pour répondre à toutes vos questions</p>
+  </div>
+
+  <div class="contact-content">
+    <div class="contact-info-card">
+      <div class="info-header">
+        <i class="fas fa-building"></i>
+        <h3>STAFOTEL</h3>
+      </div>
+      <div class="info-body">
+        <div class="info-section">
+          <h4><i class="fas fa-star"></i> Notre expertise</h4>
+          <p>Spécialiste du nettoyage hôtelier et restauration depuis de nombreuses années. Notre équipe de professionnels qualifiés est disponible 7 jours sur 7 pour répondre à tous vos besoins.</p>
+        </div>
+
+        <div class="info-section">
+          <h4><i class="fas fa-briefcase"></i> Nos services</h4>
+          <ul class="service-list">
+            <li><i class="fas fa-check"></i> Nettoyage des chambres</li>
+            <li><i class="fas fa-check"></i> Entretien des espaces communs</li>
+            <li><i class="fas fa-check"></i> Service de lingerie</li>
+            <li><i class="fas fa-check"></i> Nettoyage de restaurant</li>
+          </ul>
+        </div>
+
+        <div class="info-section">
+          <h4><i class="fas fa-clock"></i> Disponibilité</h4>
+          <p>Personnel formé et disponible 7 jours sur 7 pour assurer un service de qualité constant.</p>
+        </div>
+
+        <div class="info-section highlight">
+          <h4><i class="fas fa-lightbulb"></i> Besoin d'un devis ?</h4>
+          <p>Remplissez le formulaire ci-contre et nous vous contacterons dans les plus brefs délais pour établir un devis personnalisé.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <%= form_with(model: @contact, url: contacts_path, local: true, class: "contact-form") do |f| %>
+        <% if @contact.errors.any? %>
+          <div class="alert alert-danger">
+            <h4><%= pluralize(@contact.errors.count, "erreur") %></h4>
+            <ul>
+              <% @contact.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <div class="form-section">
+          <h3 class="section-title">
+            <i class="fas fa-user-circle"></i>
+            Vos coordonnées
+          </h3>
+
+          <div class="form-row">
+            <div class="form-group">
+              <%= f.label :firstname do %>
+                Prénom <span class="required">*</span>
+              <% end %>
+              <%= f.text_field :firstname,
+                  placeholder: "Votre prénom",
+                  class: "form-input" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :lastname do %>
+                Nom <span class="required">*</span>
+              <% end %>
+              <%= f.text_field :lastname,
+                  placeholder: "Votre nom",
+                  class: "form-input" %>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <%= f.label :email do %>
+                Email <span class="required">*</span>
+              <% end %>
+              <%= f.email_field :email,
+                  placeholder: "votre.email@exemple.com",
+                  class: "form-input" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :phone do %>
+                Téléphone <span class="required">*</span>
+              <% end %>
+              <%= f.telephone_field :phone,
+                  placeholder: "06 12 34 56 78",
+                  class: "form-input" %>
+            </div>
+          </div>
+
+          <small class="form-hint">
+            <i class="fas fa-shield-alt"></i>
+            Vos données personnelles sont protégées et ne seront utilisées que pour vous contacter.
+            <%= link_to "Voir notre politique de confidentialité", privacy_path, target: "_blank", class: "privacy-link-inline" %>
+          </small>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Envoyer ma demande", class: "btn-primary" %>
+          <%= link_to "Annuler", root_path, class: "btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="info-banner-elegant">
+    <div class="banner-icon">
+      <i class="fas fa-phone-volume"></i>
+    </div>
+    <div class="banner-content">
+      <h4>Besoin d'une réponse rapide ?</h4>
+      <p>Notre équipe est disponible pour répondre à vos questions et établir un devis personnalisé adapté à vos besoins spécifiques en hôtellerie et restauration.</p>
+    </div>
+  </div>
+</div>

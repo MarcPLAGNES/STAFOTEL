@@ -1,0 +1,204 @@
+// Specific CSS for privacy page
+
+.privacy-page {
+  padding: 60px 20px 100px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  .privacy-header {
+    text-align: center;
+    margin-bottom: 60px;
+
+    h1 {
+      font-size: 3rem;
+      color: #1a1a1a;
+      font-weight: 300;
+      letter-spacing: 2px;
+      font-family: 'Georgia', serif;
+      margin-bottom: 25px;
+    }
+
+    .header-divider {
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+      margin: 0 auto 30px;
+    }
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      color: #777;
+      font-style: italic;
+      font-weight: 300;
+    }
+  }
+
+  .privacy-content {
+    background-color: #fff;
+    border-radius: 2px;
+    border-top: 3px solid #d4af37;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    padding: 50px 45px;
+
+    @media (max-width: 768px) {
+      padding: 35px 25px;
+    }
+
+    .privacy-section {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      &.highlight-section {
+        background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+        padding: 30px;
+        border-radius: 2px;
+        border-left: 4px solid #d4af37;
+        border-bottom: none;
+      }
+
+      h2 {
+        color: #1a1a1a;
+        font-size: 1.5rem;
+        font-weight: 400;
+        font-family: 'Georgia', serif;
+        letter-spacing: 0.5px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        i {
+          color: #d4af37;
+          font-size: 1.3rem;
+        }
+      }
+
+      p {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 15px;
+        font-weight: 300;
+
+        &.highlight {
+          background-color: #fff9e6;
+          border-left: 4px solid #d4af37;
+          padding: 15px 20px;
+          border-radius: 2px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-top: 20px;
+
+          i {
+            color: #d4af37;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+          }
+
+          strong {
+            color: #1a1a1a;
+          }
+        }
+
+        &.small-text {
+          font-size: 0.9rem;
+          color: #888;
+          font-style: italic;
+          margin-top: 15px;
+        }
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0;
+
+        li {
+          color: #666;
+          font-size: 0.95rem;
+          line-height: 1.8;
+          margin-bottom: 12px;
+          padding-left: 30px;
+          position: relative;
+          font-weight: 300;
+
+          &::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1rem;
+          }
+
+          strong {
+            color: #1a1a1a;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  .privacy-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 50px;
+
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 14px 35px;
+      border-radius: 2px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      font-size: 1rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-align: center;
+
+      @media (max-width: 576px) {
+        width: 100%;
+      }
+    }
+
+    .btn-primary {
+      background-color: #d4af37;
+      color: #1a1a1a;
+      border-color: #d4af37;
+
+      &:hover {
+        background-color: transparent;
+        color: #d4af37;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+      }
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #666;
+      border-color: #e0e0e0;
+
+      &:hover {
+        background-color: #f5f5f5;
+        border-color: #d0d0d0;
+        color: #1a1a1a;
+      }
+    }
+  }
+}

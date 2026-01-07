@@ -1,10 +1,15 @@
 class ApplicationsController < ApplicationController
+  before_action :authenticate_user!, only: [:index, :show, :update_status]
+  before_action :set_application, only: [:show, :update_status]
+  before_action :authorize_application_owner!, only: [:show, :update_status]
+
   def index
-    head :ok
+    # L'utilisateur ne voit QUE ses propres candidatures
+    @applications = current_user.applications
   end
 
   def show
-    head :ok
+    # @application déjà défini
   end
 
   def new
@@ -32,7 +37,20 @@ class ApplicationsController < ApplicationController
 
   private
 
+  def set_application
+    @application = Application.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to applications_path, alert: "Candidature introuvable."
+  end
+
+  def authorize_application_owner!
+    unless @application.contact.user == current_user
+      redirect_to root_path, alert: "Vous n'êtes pas autorisé à accéder à cette candidature."
+    end
+  end
+
   def application_params
-    params.require(:application).permit(:status, :message, :contact_id, :job_id)
+    # On ne permet PAS de modifier le status directement (seulement l'admin)
+    params.require(:application).permit(:message, :contact_id, :job_id)
   end
 end
