@@ -1,13 +1,79 @@
-<h1>Nouveau devis</h1>
-<%= form_with(model: @quote, url: service_quotes_path(@service)) do |f| %>
-  <div>
-    <%= f.label :message, "Message" %>
-    <%= f.text_area :message %>
+<div class="quote-form-page">
+  <div class="quote-form-container">
+    <!-- Header -->
+    <div class="quote-form-header">
+      <div class="form-back">
+        <%= link_to "← Retour", service_path(@service), class: "back-link" %>
+      </div>
+      <div class="form-title">
+        <h1>Demande de Devis</h1>
+        <p><%= @service.name %></p>
+      </div>
+    </div>
+
+    <!-- Service Info -->
+    <div class="service-info-box">
+      <div class="service-details">
+        <h3><%= @service.name %></h3>
+        <p><%= @service.description %></p>
+        <div class="service-rate">
+          <span class="label">Tarif:</span>
+          <span class="rate"><%= number_to_currency(@service.price, unit: "€", separator: ",", delimiter: " ") %>/h</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="quote-form">
+      <%= form_with(model: @quote, url: service_quotes_path(@service), local: true) do |f| %>
+        <% if @quote.errors.any? %>
+          <div class="error-box">
+            <h2><%= pluralize(@quote.errors.count, "erreur") %> détectée(s):</h2>
+            <ul>
+              <% @quote.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Contact Section -->
+        <fieldset class="form-section">
+          <legend>Vos Informations</legend>
+
+          <div class="form-group">
+            <%= f.label :contact_id, "Sélectionnez votre contact" %>
+            <%= f.collection_select :contact_id, Contact.all, :id, lambda { |c| "#{c.firstname} #{c.lastname}" }, { include_blank: "-- Choisir un contact --" }, class: "form-control" %>
+          </div>
+        </fieldset>
+
+        <!-- Message Section -->
+        <fieldset class="form-section">
+          <legend>Détails de votre Demande</legend>
+
+          <div class="form-group">
+            <%= f.label :message, "Description de votre besoin" %>
+            <%= f.text_area :message, placeholder: "Décrivez votre demande en détail...", class: "form-control", rows: 6 %>
+            <small>Donnez-nous le maximum de détails pour un devis précis</small>
+          </div>
+        </fieldset>
+
+        <!-- Hidden fields -->
+        <%= f.hidden_field :service_id, value: @service.id %>
+        <%= f.hidden_field :status, value: "pending" %>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <%= f.submit "Demander un devis", class: "btn btn-submit" %>
+          <%= link_to "Annuler", service_path(@service), class: "btn btn-cancel" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-banner">
+      <i class="fas fa-info-circle"></i>
+      <p>Un devis vous sera envoyé dans les 24h à l'adresse email de votre contact.</p>
+    </div>
   </div>
-  <%= f.hidden_field :service_id, value: @service.id %>
-  <div>
-    <%= f.label :contact_id, "Contact ID" %>
-    <%= f.number_field :contact_id %>
-  </div>
-  <%= f.submit "Créer le devis" %>
-<% end %>
+</div>

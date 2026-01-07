@@ -1,2 +1,106 @@
-<h1>Devis</h1>
-<p>Détail du devis.</p>
+<div class="quote-page">
+  <div class="quote-container">
+    <!-- Header -->
+    <div class="quote-header">
+      <div class="quote-back">
+        <%= link_to "← Retour", services_path, class: "back-link" %>
+      </div>
+      <div class="quote-logo">
+        <h1>STAFOTEL</h1>
+        <p>Devis Professionnel</p>
+      </div>
+    </div>
+
+    <!-- Référence -->
+    <div class="quote-reference">
+      <div class="ref-item">
+        <span class="label">Devis N°</span>
+        <span class="value"><%= @quote.id %></span>
+      </div>
+      <div class="ref-item">
+        <span class="label">Date</span>
+        <span class="value"><%= l(@quote.created_at, format: :long) %></span>
+      </div>
+      <div class="ref-item">
+        <span class="label">Statut</span>
+        <span class="value status-<%= @quote.status %>">
+          <% case @quote.status
+             when "pending" %>En attente
+          <% when "accepted" %>Accepté
+          <% when "rejected" %>Refusé
+          <% else %>
+            <%= @quote.status %>
+          <% end %>
+        </span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="quote-divider"></div>
+
+    <!-- Service -->
+    <div class="quote-content">
+      <section class="quote-section">
+        <h3 class="section-title">Service Demandé</h3>
+        <div class="service-card">
+          <h2><%= @quote.service.name %></h2>
+          <p><%= @quote.service.description %></p>
+          <div class="service-price">
+            <span class="label">Tarif Horaire:</span>
+            <span class="price"><%= number_to_currency(@quote.service.price, unit: "€", separator: ",", delimiter: " ") %>/h</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="quote-section">
+        <h3 class="section-title">Détails</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">Contact</span>
+            <span class="value"><% if @quote.contact %><%= "#{@quote.contact.firstname} #{@quote.contact.lastname}" %><% end %></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Email</span>
+            <span class="value"><%= @quote.contact.email if @quote.contact %></span>
+          </div>
+          <div class="info-item">
+            <span class="label">Téléphone</span>
+            <span class="value"><%= @quote.contact.phone if @quote.contact %></span>
+          </div>
+        </div>
+      </section>
+
+      <% if @quote.message.present? %>
+        <section class="quote-section">
+          <h3 class="section-title">Message</h3>
+          <div class="message-box">
+            <%= simple_format(@quote.message) %>
+          </div>
+        </section>
+      <% end %>
+    </div>
+
+    <!-- Actions -->
+    <div class="quote-actions">
+      <% if @quote.status == "pending" %>
+        <div class="action-buttons">
+          <%= link_to "Accepter", quote_path(@quote, quote: { status: "accepted" }), method: :patch, class: "btn btn-accept" %>
+          <%= link_to "Refuser", quote_path(@quote, quote: { status: "rejected" }), method: :patch, class: "btn btn-reject" %>
+        </div>
+      <% elsif @quote.status == "accepted" %>
+        <div class="alert alert-success">
+          <i class="fas fa-check-circle"></i> Devis accepté
+        </div>
+      <% elsif @quote.status == "rejected" %>
+        <div class="alert alert-danger">
+          <i class="fas fa-times-circle"></i> Devis refusé
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Footer -->
+    <div class="quote-footer">
+      <p><strong>STAFOTEL</strong> - Solutions de Nettoyage Professionnel</p>
+    </div>
+  </div>
+</div>

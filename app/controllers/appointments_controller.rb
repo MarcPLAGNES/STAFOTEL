@@ -1,19 +1,30 @@
 class AppointmentsController < ApplicationController
   def index
-    head :ok
+    @appointments = Appointment.all
   end
 
   def show
-    head :ok
+    @appointment = Appointment.find(params[:id])
   end
 
   def reschedule
-    head :ok
+    @appointment = Appointment.find(params[:id])
+    if @appointment.update(date: params[:appointment][:date])
+      redirect_to @appointment, notice: "Rendez-vous reprogrammé."
+    else
+      redirect_to @appointment, alert: "Erreur lors de la reprogrammation."
+    end
   end
 
   def update_status
-    head :ok
+    @appointment = Appointment.find(params[:id])
+    if @appointment.update(status: params[:appointment][:status])
+      redirect_to @appointment, notice: "Statut mis à jour."
+    else
+      redirect_to @appointment, alert: "Erreur lors de la mise à jour."
+    end
   end
+
   def create
     @appointment = Appointment.new(appointment_params)
     if @appointment.save

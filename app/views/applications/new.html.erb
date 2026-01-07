@@ -1,13 +1,75 @@
-<h1>Nouvelle candidature</h1>
-<%= form_with(model: @application, url: job_applications_path(@job)) do |f| %>
-  <div>
-    <%= f.label :message, "Message" %>
-    <%= f.text_area :message %>
+<div class="application-form-page">
+  <div class="application-form-container">
+    <!-- Header -->
+    <div class="application-form-header">
+      <div class="form-back">
+        <%= link_to "← Retour", job_path(@job), class: "back-link" %>
+      </div>
+      <div class="form-title">
+        <h1>Postuler à ce Poste</h1>
+        <p><%= @job.title %></p>
+      </div>
+    </div>
+
+    <!-- Job Info -->
+    <div class="job-info-box">
+      <div class="job-details">
+        <h3><%= @job.title %></h3>
+        <p><%= truncate(@job.description, length: 300) %></p>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="application-form">
+      <%= form_with(model: @application, url: job_applications_path(@job), local: true) do |f| %>
+        <% if @application.errors.any? %>
+          <div class="error-box">
+            <h2><%= pluralize(@application.errors.count, "erreur") %> détectée(s):</h2>
+            <ul>
+              <% @application.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- Contact Section -->
+        <fieldset class="form-section">
+          <legend>Vos Informations</legend>
+
+          <div class="form-group">
+            <%= f.label :contact_id, "Sélectionnez votre profil" %>
+            <%= f.collection_select :contact_id, Contact.all, :id, lambda { |c| "#{c.firstname} #{c.lastname} - #{c.email}" }, { include_blank: "-- Choisir un contact --" }, class: "form-control" %>
+          </div>
+        </fieldset>
+
+        <!-- Message Section -->
+        <fieldset class="form-section">
+          <legend>Lettre de Motivation</legend>
+
+          <div class="form-group">
+            <%= f.label :message, "Présentez-vous et expliquez votre intérêt" %>
+            <%= f.text_area :message, placeholder: "Parlez-nous de votre expérience, vos compétences et pourquoi vous souhaitez rejoindre STAFOTEL...", class: "form-control", rows: 8 %>
+            <small>Décrivez votre parcours et vos motivations</small>
+          </div>
+        </fieldset>
+
+        <!-- Hidden fields -->
+        <%= f.hidden_field :job_id, value: @job.id %>
+        <%= f.hidden_field :status, value: "pending" %>
+
+        <!-- Submit -->
+        <div class="form-actions">
+          <%= f.submit "Envoyer ma candidature", class: "btn btn-submit" %>
+          <%= link_to "Annuler", job_path(@job), class: "btn btn-cancel" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-banner">
+      <i class="fas fa-briefcase"></i>
+      <p>Votre candidature sera examinée par notre équipe. Nous vous contacterons rapidement si votre profil correspond.</p>
+    </div>
   </div>
-  <%= f.hidden_field :job_id, value: @job.id %>
-  <div>
-    <%= f.label :contact_id, "Contact ID" %>
-    <%= f.number_field :contact_id %>
-  </div>
-  <%= f.submit "Postuler" %>
-<% end %>
+</div>

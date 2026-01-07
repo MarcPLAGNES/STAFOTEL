@@ -1,10 +1,10 @@
 class QuotesController < ApplicationController
   def index
-    head :ok
+    @quotes = Quote.all
   end
 
   def show
-    head :ok
+    @quote = Quote.find(params[:id])
   end
 
   def new
@@ -13,8 +13,14 @@ class QuotesController < ApplicationController
   end
 
   def update_status
-    head :ok
+    @quote = Quote.find(params[:id])
+    if @quote.update(status: params[:quote][:status])
+      redirect_to @quote, notice: "Statut du devis mis à jour."
+    else
+      redirect_to @quote, alert: "Erreur lors de la mise à jour."
+    end
   end
+
   def create
     @quote = Quote.new(quote_params)
     if @quote.save
@@ -33,6 +39,6 @@ class QuotesController < ApplicationController
   private
 
   def quote_params
-    params.require(:quote).permit(:status, :message, :contact_id, :service_id)
+    params.require(:quote).permit(:status, :message, :contact_id, :service_id, :duration)
   end
 end
