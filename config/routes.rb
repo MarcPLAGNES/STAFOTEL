@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get "/company", to: "pages#company"
   get "/tips", to: "pages#tips"
 
+  # Tips
+  resources :tips, only: [:show]
+
   # Services & devis (shallow for cleaner URLs)
   resources :services, only: [:index, :show] do
     resources :quotes, only: [:new, :create], shallow: true

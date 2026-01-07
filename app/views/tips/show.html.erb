@@ -1,0 +1,51 @@
+<div class="container tip-show-page">
+  <%= link_to tips_path, class: "back-link-stylized" do %>
+    <span class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+    <span class="back-text">Retour aux astuces</span>
+  <% end %>
+
+  <div class="tip-header">
+    <h1><%= @tip.title %></h1>
+    <div class="tip-header-divider"></div>
+  </div>
+
+  <div class="tip-detail">
+    <div class="tip-detail-image">
+      <%= image_tag(@tip.image, alt: @tip.title, class: "detail-image") %>
+    </div>
+
+    <div class="tip-detail-content">
+      <h2>À propos de cette astuce</h2>
+
+      <div class="tip-overview">
+        <p class="tip-intro"><%= @tip.intro %></p>
+      </div>
+
+      <h3 class="section-title">Explication détaillée</h3>
+      <div class="tip-description-full">
+        <%= simple_format(@tip.description) %>
+      </div>
+
+      <h3 class="section-title">Produits et matériaux nécessaires</h3>
+      <div class="tip-products-box">
+        <%= simple_format(@tip.products) %>
+      </div>
+
+      <h3 class="section-title">Mode d'emploi</h3>
+      <div class="tip-usage-box">
+        <%= simple_format(@tip.usage) %>
+      </div>
+
+      <h3 class="section-title">Résultats attendus</h3>
+      <div class="tip-results-box">
+        <%= simple_format(@tip.results) %>
+      </div>
+
+      <div class="tip-actions">
+        <%= link_to "Voir les autres astuces", tips_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

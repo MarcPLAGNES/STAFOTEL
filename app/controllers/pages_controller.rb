@@ -12,6 +12,7 @@ class PagesController < ApplicationController
   end
 
   def tips
+    @tips = Tip.all
   end
 
   def company

@@ -1,9 +1,9 @@
 class ServicesController < ApplicationController
 	def index
-		head :ok
+		@services = Service.all
 	end
 
 	def show
-		head :ok
+		@service = Service.find(params[:id])
 	end
 end

@@ -1,2 +1,72 @@
-<h1>Service</h1>
-<p>Détail du service.</p>
+<div class="container service-show-page">
+  <%= link_to services_path, class: "back-link-stylized" do %>
+    <span class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+    <span class="back-text">Retour aux services</span>
+  <% end %>
+
+  <div class="service-header">
+    <h1><%= @service.name %></h1>
+    <div class="service-header-divider"></div>
+  </div>
+
+  <div class="service-detail">
+    <div class="service-detail-image">
+      <%
+        service_images = {
+          'Nettoyage quotidien' => 1,
+          'Nettoyage en profondeur' => 2,
+          'Service personnalisé' => 3
+        }
+        image_number = service_images[@service.name] || 1
+      %>
+      <%= image_tag("Service#{image_number}.png", alt: @service.name, class: "detail-image") %>
+    </div>
+
+    <div class="service-detail-content">
+      <h2>À propos de ce service</h2>
+
+      <div class="service-overview">
+        <p class="service-intro">
+          <%
+            service_descriptions = {
+              'Nettoyage quotidien' => "Notre service de nettoyage quotidien assure l'entretien régulier de vos espaces hôteliers. Notre équipe intervient chaque jour pour maintenir vos chambres et espaces communs dans un état impeccable, garantissant le confort de vos clients.",
+              'Nettoyage en profondeur' => "Le nettoyage en profondeur est une prestation complète qui va au-delà de l'entretien quotidien. Nos experts utilisent des techniques et produits spécialisés pour un résultat optimal, éliminant saletés tenaces et bactéries pour un environnement parfaitement sain.",
+              'Service personnalisé' => "Notre service personnalisé s'adapte exactement à vos besoins spécifiques. Que ce soit pour des horaires particuliers, des exigences spéciales ou des zones ciblées, nous créons une solution sur-mesure pour votre établissement."
+            }
+          %>
+          <%= service_descriptions[@service.name] || "Découvrez notre service de nettoyage professionnel adapté à vos besoins hôteliers." %>
+        </p>
+      </div>
+
+      <div class="service-price-box">
+        <h3>Tarif</h3>
+        <p class="price-value"><%= number_to_currency(@service.price, unit: "€", separator: ",", delimiter: " ") %> <span class="price-unit">/ heure</span></p>
+        <p class="price-info">Prix indicatif - Devis personnalisé sur demande</p>
+      </div>
+
+      <h3 class="section-title">Prestations incluses</h3>
+      <div class="service-description-full">
+        <%
+          service_details = {
+            'Nettoyage quotidien' => "• Nettoyage des chambres et sanitaires\n• Changement du linge de lit\n• Réapprovisionnement des consommables\n• Contrôle qualité systématique\n• Intervention 7j/7",
+            'Nettoyage en profondeur' => "• Nettoyage complet des surfaces\n• Désinfection approfondie\n• Traitement des sols et moquettes\n• Nettoyage des vitres et encadrements\n• Intervention planifiée selon vos besoins",
+            'Service personnalisé' => "• Analyse de vos besoins spécifiques\n• Plan d'intervention sur-mesure\n• Équipe dédiée et formée\n• Flexibilité des horaires\n• Suivi personnalisé"
+          }
+        %>
+        <%= simple_format(service_details[@service.name] || @service.description || "Service de qualité professionnelle") %>
+      </div>
+
+      <div class="service-info-box">
+        <h3>Intéressé(e) par ce service ?</h3>
+        <p>Demandez un devis personnalisé et gratuit adapté aux besoins de votre établissement.</p>
+      </div>
+
+      <div class="service-actions">
+        <%= link_to "Demander un devis", new_service_quote_path(@service), class: "btn btn-flat" %>
+        <%= link_to "Voir tous les services", services_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

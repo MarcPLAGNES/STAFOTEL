@@ -1,2 +1,27 @@
-<h1>Services</h1>
-<p>Liste des services.</p>
+<div class="container services-page">
+  <h1>Nos Services</h1>
+  <p class="page-intro">Des solutions de nettoyage professionnelles adaptées à vos besoins</p>
+
+  <% if @services.any? %>
+    <div class="services-grid">
+      <% @services.each_with_index do |service, index| %>
+        <div class="card-trip">
+          <div class="service-image-container">
+            <%= link_to service_path(service) do %>
+              <%= image_tag("Service#{index + 1}.png", class: "d-block w-100", height: 300, alt: service.name) %>
+            <% end %>
+          </div>
+          <div class="service-content">
+            <h4><%= service.name %></h4>
+            <p class="service-price"><%= number_to_currency(service.price, unit: "€", separator: ",", delimiter: " ") %> <span class="price-unit">/ h</span></p>
+            <%= link_to "En savoir plus", service_path(service), class: "btn btn-flat" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <p>Aucun service n'est actuellement disponible.</p>
+    </div>
+  <% end %>
+</div>

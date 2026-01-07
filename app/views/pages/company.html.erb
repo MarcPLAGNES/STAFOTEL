@@ -1,2 +1,115 @@
-<h1>Notre société</h1>
-<p>STAFOTEL — Intérim & nettoyage hôtelier.</p>
+<div class="company-page">
+  <div class="company-hero">
+    <div class="company-hero-content">
+      <h1>Notre Histoire</h1>
+      <p class="company-subtitle">De la passion pour l'excellence au cœur de l'hospitalité</p>
+    </div>
+  </div>
+
+  <div class="container company-container">
+    <!-- Section Fondateur -->
+    <section class="founder-section">
+      <div class="founder-content">
+        <div class="founder-text">
+          <h2>Mohamad EL MALLA</h2>
+          <div class="founder-divider"></div>
+          <p class="founder-title">Fondateur & Visionnaire de STAFOTEL</p>
+
+          <p class="founder-story">
+            Tout a commencé par une vision simple : offrir un service d'excellence en nettoyage et intérim hôtelier.
+            Mohamad EL MALLA, qui a débuté sa carrière en tant qu'équipier dans les plus beaux établissements hôteliers,
+            a rapidement compris que la qualité du nettoyage et du service était la clé de la satisfaction clientèle.
+          </p>
+
+          <p class="founder-story">
+            Avec une expérience terrain solide et une compréhension profonde des standards professionnels,
+            Mohamad a fondé <strong>STAFOTEL</strong> avec un objectif clair : révolutionner le secteur de l'intérim
+            et du nettoyage hôtelier en mettant l'accent sur la formation, la qualité et le respect des normes les plus exigeantes.
+          </p>
+
+          <p class="founder-story">
+            Aujourd'hui, STAFOTEL est devenue une référence en matière de solutions de nettoyage professionnelles
+            et d'intérim spécialisé pour l'hôtellerie et la restauration, reconnue pour son excellence opérationnelle
+            et son engagement envers ses clients et ses collaborateurs.
+          </p>
+        </div>
+        <div class="founder-image">
+          <%= image_tag("Img3.png", alt: "Mohamad EL MALLA") %>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Valeurs -->
+    <section class="values-section">
+      <h2>Nos Valeurs Fondamentales</h2>
+      <div class="values-divider"></div>
+
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h3>Excellence</h3>
+          <p>Nous poursuivons l'excellence dans chaque détail de nos services, en mettant les standards les plus élevés à chaque intervention.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3>Fiabilité</h3>
+          <p>Nos clients nous font confiance pour un service fiable, professionnel et pérenne, jour après jour.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3>Respect</h3>
+          <p>Nous respectons nos collaborateurs, nos clients et les environnements dans lesquels nous opérons, avec humilité et intégrité.</p>
+        </div>
+
+        <div class="value-card">
+          <div class="value-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Innovation</h3>
+          <p>Nous nous adaptons constamment aux nouvelles méthodes et technologies pour offrir des solutions toujours plus performantes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Mission -->
+    <section class="mission-section">
+      <div class="mission-content">
+        <div class="mission-text">
+          <h2>Notre Mission</h2>
+          <div class="mission-divider"></div>
+
+          <p>
+            <strong>STAFOTEL</strong> a pour mission de fournir des solutions complètes de nettoyage professionnel et d'intérim spécialisé
+            au secteur hôtelier et restauration. Nous nous engageons à :
+          </p>
+
+          <ul class="mission-list">
+            <li>Garantir un nettoyage impeccable et respectueux des normes d'hygiène les plus exigeantes</li>
+            <li>Former et valoriser nos équipes pour en faire des experts du secteur</li>
+            <li>Offrir un accompagnement personnalisé adapté aux besoins spécifiques de chaque établissement</li>
+            <li>Maintenir des relations de confiance durable avec nos partenaires</li>
+            <li>Contribuer au succès et à la réputation de nos clients par nos services d'excellence</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section CTA -->
+    <section class="company-cta">
+      <h2>Rejoindre STAFOTEL</h2>
+      <p>Découvrez comment nous pouvons transformer votre expérience en matière de nettoyage et d'intérim.</p>
+      <div class="cta-buttons">
+        <%= link_to "Nos Services", services_path, class: "btn btn-primary" %>
+        <%= link_to "Retour à l'accueil", root_path, class: "btn btn-secondary" %>
+      </div>
+    </section>
+  </div>
+</div>
