@@ -1,2 +1,61 @@
-<h1>Métier</h1>
-<p>Détail du métier.</p>
+<div class="container job-show-page">
+  <%= link_to jobs_path, class: "back-link-stylized" do %>
+    <span class="back-icon">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+    <span class="back-text">Retour aux métiers</span>
+  <% end %>
+
+  <div class="job-header">
+    <h1><%= @job.title %></h1>
+    <div class="job-header-divider"></div>
+  </div>
+
+  <div class="job-detail">
+    <div class="job-detail-image">
+      <%
+        job_images = {
+          'Cafetier(ère)' => 1,
+          'Gouvernant(e)' => 2,
+          'Valet/Femme de chambre' => 3,
+          'Linger(ère)' => 4
+        }
+        image_number = job_images[@job.title] || 1
+      %>
+      <%= image_tag("job#{image_number}.png", alt: @job.title, class: "detail-image") %>
+    </div>
+
+    <div class="job-detail-content">
+      <h2>À propos de ce métier</h2>
+
+      <div class="job-overview">
+        <p class="job-intro">
+          <%
+            job_descriptions = {
+              'Cafetier(ère)' => "Le cafetier ou la cafetière assure le service et la préparation des boissons au bar et au café de l'établissement. Ce professionnel veille à offrir une expérience client agréable tout en maintenant des standards de qualité élevés.",
+              'Gouvernant(e)' => "Le gouvernant ou la gouvernante supervise l'ensemble du service d'étages et coordonne les équipes de nettoyage. Ce rôle clé garantit la qualité irréprochable des chambres et des espaces communs de l'hôtel.",
+              'Valet/Femme de chambre' => "Le valet ou la femme de chambre est responsable de l'entretien quotidien des chambres et de leur préparation pour les clients. Ce métier essentiel demande rigueur, rapidité et un grand souci du détail.",
+              'Linger(ère)' => "Le linger ou la lingère prend en charge la gestion complète du linge de l'établissement : tri, lavage, repassage et rangement. Ce métier requiert organisation, rigueur et respect des normes d'hygiène."
+            }
+          %>
+          <%= job_descriptions[@job.title] || "Découvrez ce métier passionnant dans le secteur de l'hôtellerie et de la restauration." %>
+        </p>
+      </div>
+
+      <h3 class="section-title">Missions principales</h3>
+      <div class="job-description-full">
+        <%= simple_format(@job.description) %>
+      </div>
+
+      <div class="job-info-box">
+        <h3>Intéressé(e) par ce poste ?</h3>
+        <p>Rejoignez notre équipe de professionnels qualifiés et participez à l'excellence du service hôtelier.</p>
+      </div>
+
+      <div class="job-actions">
+        <%= link_to "Postuler maintenant", new_job_application_path(@job), class: "btn btn-flat" %>
+        <%= link_to "Voir tous les métiers", jobs_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,2 +1,36 @@
-<h1>Métiers</h1>
-<p>Liste des métiers.</p>
+<div class="container jobs-page">
+  <h1>Nos Métiers</h1>
+  <p class="page-intro">Découvrez les professionnels du nettoyage hôtelier et restauration</p>
+
+  <% if @jobs.any? %>
+    <div class="jobs-grid">
+      <% @jobs.each do |job| %>
+        <div class="card-trip">
+          <div class="job-image-container">
+            <%= link_to job_path(job) do %>
+              <%
+                job_images = {
+                  'Cafetier(ère)' => 1,
+                  'Gouvernant(e)' => 2,
+                  'Valet/Femme de chambre' => 3,
+                  'Linger(ère)' => 4
+                }
+                image_number = job_images[job.title] || 1
+              %>
+              <%= image_tag("job#{image_number}.png", class: "d-block w-100", height: 300, alt: job.title) %>
+            <% end %>
+          </div>
+          <div class="job-content">
+            <h4><%= job.title %></h4>
+            <p class="job-description"><%= truncate(job.description, length: 150) %></p>
+            <%= link_to "En savoir plus", job_path(job), class: "btn btn-flat" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <p>Aucun métier n'est actuellement disponible.</p>
+    </div>
+  <% end %>
+</div>

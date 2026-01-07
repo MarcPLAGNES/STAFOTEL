@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # Pages publiques
   root "pages#home"
+  get "/jobs", to: "pages#jobs"
   get "/company", to: "pages#company"
   get "/tips", to: "pages#tips"
 
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   # Jobs & candidatures (shallow)
-  resources :jobs, only: [:index, :show, :new, :create] do
+  resources :jobs, only: [:show, :new, :create] do
     resources :applications, only: [:new, :create], shallow: true
   end
 

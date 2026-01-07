@@ -7,6 +7,10 @@ class PagesController < ApplicationController
     @services = Service.all
   end
 
+  def jobs
+    @jobs = Job.all
+  end
+
   def tips
   end
 
