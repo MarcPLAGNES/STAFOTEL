@@ -27,6 +27,44 @@
   max-width: 100%;
 }
 
+.banner-logo {
+  height: 180px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  animation: logoBounceSoft 3s ease-in-out infinite;
+}
+
+@keyframes logoBounceSoft {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.02);
+  }
+}
+
+.logo-sparkle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFF8DC 50%, #FFD700 100%);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0) translate(-50%, -50%) rotate(0deg);
+  transition: all 0.3s ease-out;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.9),
+              0 0 30px rgba(255, 215, 0, 0.6),
+              0 0 45px rgba(255, 215, 0, 0.3);
+  z-index: 2;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+
+  &.active {
+    opacity: 1;
+    transform: scale(1.5) translate(-50%, -50%) rotate(180deg);
+  }
+}
+
 .banner p {
     color: #ddd;
     font-size: 1.5rem;
