@@ -214,50 +214,79 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-
 <script>
+  console.log('Script carte chargé');
   document.addEventListener('DOMContentLoaded', function() {
-    // Créer la carte
-    const map = L.map('intervention-map').setView([46.5, 2.5], 5);
+    console.log('DOM loaded');
+    console.log('Leaflet disponible?', typeof L !== 'undefined');
 
-    // Ajouter la couche de tuiles OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 19
-    }).addTo(map);
+    // Attendre un peu pour s'assurer que tout est chargé
+    setTimeout(function() {
+      console.log('Tentative de création de la carte');
+      const mapElement = document.getElementById('intervention-map');
+      console.log('Element carte trouvé?', mapElement);
+      console.log('Hauteur de l\'élément:', mapElement ? mapElement.offsetHeight : 'N/A');
 
-    // Villes d'intervention avec coordonnées
-    const cities = [
-      { name: 'Paris', lat: 48.8566, lng: 2.3522, color: '#d4af37' },
-      { name: 'Valence', lat: 44.9339, lng: 4.8944, color: '#d4af37' },
-      { name: 'Bordeaux', lat: 44.8378, lng: -0.5792, color: '#d4af37' },
-      { name: 'Montpellier', lat: 43.6108, lng: 3.8767, color: '#d4af37' },
-      { name: 'Beaune', lat: 47.0234, lng: 4.8357, color: '#d4af37' }
-    ];
+      if (!mapElement) {
+        console.error('Element intervention-map not found');
+        return;
+      }
 
-    // Ajouter les marqueurs et cercles pour chaque ville
-    cities.forEach(function(city) {
-      // Cercle d'intervention (rayon de ~50km)
-      L.circle([city.lat, city.lng], {
-        color: city.color,
-        fillColor: city.color,
-        fillOpacity: 0.15,
-        weight: 2,
-        radius: 50000
-      }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
+      if (typeof L === 'undefined') {
+        console.error('Leaflet not loaded');
+        return;
+      }
 
-      // Marqueur
-      L.circleMarker([city.lat, city.lng], {
-        radius: 8,
-        fillColor: city.color,
-        color: '#fff',
-        weight: 2,
-        opacity: 1,
-        fillOpacity: 1
-      }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
-    });
+      try {
+        const map = L.map('intervention-map').setView([46.5, 2.5], 5);
+        console.log('Carte créée avec succès');
+
+        // Ajouter la couche de tuiles OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 19
+        }).addTo(map);
+
+        // Villes d'intervention avec coordonnées
+        const cities = [
+          { name: 'Paris', lat: 48.8566, lng: 2.3522, color: '#d4af37' },
+          { name: 'Valence', lat: 44.9339, lng: 4.8944, color: '#d4af37' },
+          { name: 'Bordeaux', lat: 44.8378, lng: -0.5792, color: '#d4af37' },
+          { name: 'Montpellier', lat: 43.6108, lng: 3.8767, color: '#d4af37' },
+          { name: 'Beaune', lat: 47.0234, lng: 4.8357, color: '#d4af37' }
+        ];
+
+        // Ajouter les marqueurs et cercles pour chaque ville
+        cities.forEach(function(city) {
+          // Cercle d'intervention (rayon de ~50km)
+          L.circle([city.lat, city.lng], {
+            color: city.color,
+            fillColor: city.color,
+            fillOpacity: 0.15,
+            weight: 2,
+            radius: 50000
+          }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
+
+          // Marqueur
+          L.circleMarker([city.lat, city.lng], {
+            radius: 8,
+            fillColor: city.color,
+            color: '#fff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 1
+          }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
+        });
+
+        // Forcer le rafraîchissement de la carte
+        setTimeout(function() {
+          map.invalidateSize();
+          console.log('Carte rafraîchie');
+        }, 100);
+      } catch(e) {
+        console.error('Erreur création carte:', e);
+      }
+    }, 200);
   });
 </script>
 
@@ -357,5 +386,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <%= image_tag("Partenaire 1.png", alt: "Partenaire 1", class: "partner-logo") %>
     <%= image_tag("Partenaire 2.png", alt: "Partenaire 2", class: "partner-logo") %>
     <%= image_tag("Partenaire 3.jpg", alt: "Partenaire 3", class: "partner-logo") %>
+    <%= image_tag("Partenaire 4.png", alt: "Partenaire 4", class: "partner-logo") %>
+    <%= image_tag("Partenaire 4bis.png", alt: "Partenaire 4bis", class: "partner-logo") %>
   </div>
 </section>
