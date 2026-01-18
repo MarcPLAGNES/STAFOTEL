@@ -1,8 +1,8 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("Img1.png") %>');">
   <div class="container">
     <h1 data-controller="logo-shine"><%= image_tag("Logo.png", class: "banner-logo") %></h1>
-    <p><strong>Spécialiste du nettoyage hôtelier et restauration</strong></p>
-    <p class="banner-subtitle">Personnel qualifié, formé et disponible pour vos besoins 7/7j</p>
+    <p><strong>Fournisseur de personnel spécialisé en nettoyage hôtelier et restauration</strong></p>
+    <p class="banner-subtitle">Du personnel qualifié, formé et disponible 7j/7 pour tous vos besoins de nettoyage</p>
   </div>
   <div class="button-container">
     <%= link_to "Demander un devis", services_path, class: "btn btn-flat" %>
@@ -290,6 +290,44 @@ document.addEventListener('DOMContentLoaded', function() {
         <i class="fas fa-check-circle"></i>
         <h4>Contrôle Qualité</h4>
         <p>Vérification rigoureuse à chaque intervention</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h2>Nos formules d'intervention</h2>
+<section class="service-modes-section">
+  <div class="container">
+    <p class="section-intro">Nous vous proposons deux formules adaptées à vos besoins</p>
+    <div class="service-modes-grid">
+      <div class="service-mode-card">
+        <div class="mode-icon">
+          <i class="fas fa-handshake"></i>
+        </div>
+        <h3>Sous-traitance</h3>
+        <p class="mode-description">Confiez-nous l'intégralité de vos besoins en nettoyage. Nous gérons tout de A à Z : recrutement, formation, planification et contrôle qualité.</p>
+        <ul class="mode-benefits">
+          <li><i class="fas fa-check"></i> Gestion complète du personnel</li>
+          <li><i class="fas fa-check"></i> Garantie de qualité et continuité</li>
+          <li><i class="fas fa-check"></i> Réduction de vos charges administratives</li>
+          <li><i class="fas fa-check"></i> Intervention clé en main</li>
+        </ul>
+        <%= link_to "En savoir plus", sous_traitance_path, class: "mode-cta" %>
+      </div>
+
+      <div class="service-mode-card">
+        <div class="mode-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Intérim</h3>
+        <p class="mode-description">Renforcez temporairement vos équipes avec notre personnel qualifié. Flexible et réactif, nous répondons à vos pics d'activité et remplacements.</p>
+        <ul class="mode-benefits">
+          <li><i class="fas fa-check"></i> Personnel disponible rapidement</li>
+          <li><i class="fas fa-check"></i> Flexibilité selon vos besoins</li>
+          <li><i class="fas fa-check"></i> Profils qualifiés et formés</li>
+          <li><i class="fas fa-check"></i> Adaptation à vos plannings</li>
+        </ul>
+        <%= link_to "En savoir plus", interim_path, class: "mode-cta" %>
       </div>
     </div>
   </div>

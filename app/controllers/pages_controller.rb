@@ -21,4 +21,12 @@ class PagesController < ApplicationController
   def privacy
     # Page de politique de confidentialité RGPD
   end
+
+  def sous_traitance
+    # Page expliquant la formule sous-traitance
+  end
+
+  def interim
+    # Page expliquant la formule intérim
+  end
 end

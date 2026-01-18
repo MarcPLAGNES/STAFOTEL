@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get "/tips", to: "pages#tips"
   get "/contact", to: "contacts#new", as: :contact
   get "/privacy", to: "pages#privacy", as: :privacy
+  get "/sous-traitance", to: "pages#sous_traitance", as: :sous_traitance
+  get "/interim", to: "pages#interim", as: :interim
 
   # Tips
   resources :tips, only: [:show]
