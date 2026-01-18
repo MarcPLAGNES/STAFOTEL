@@ -34,7 +34,21 @@ class QuotesController < ApplicationController
   end
 
   def create
+    # Créer ou trouver le contact
+    @contact = Contact.find_or_create_by(
+      email: params[:quote][:contact_email],
+      user: current_user
+    ) do |contact|
+      contact.firstname = params[:quote][:contact_firstname]
+      contact.lastname = params[:quote][:contact_lastname]
+      contact.phone = params[:quote][:contact_phone]
+    end
+
+    # Créer le devis avec le contact et status par défaut
     @quote = Quote.new(quote_params)
+    @quote.contact = @contact
+    @quote.status = "pending"
+
     if @quote.save
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Devis créé." }
@@ -64,6 +78,6 @@ class QuotesController < ApplicationController
   end
 
   def quote_params
-    params.require(:quote).permit(:message, :contact_id, :service_id, :duration)
+    params.require(:quote).permit(:message, :service_id, :duration)
   end
 end

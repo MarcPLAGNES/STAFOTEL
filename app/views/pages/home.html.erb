@@ -12,53 +12,149 @@
 <h2>Découvrez nos métiers</h2>
 
 <div class="box container">
-  <div id="carousel" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="cards d-flex justify-content-center">
-          <div class="card-trip">
-            <div><h4><%= @job1.title %></h4></div>
-            <%= link_to jobs_path(@job1) do %>
-              <%= image_tag("job1.png", class: "d-block w-100", height: 300) %>
-            <% end %>
-          </div>
-          <div class="card-trip">
-            <div><h4><%= @job2.title %></h4></div>
-            <%= link_to jobs_path(@job2) do %>
-              <%= image_tag("job2.png", class: "d-block w-100", height: 300) %>
-            <% end %>
-          </div>
-          <div class="card-trip">
-            <div><h4><%= @job3.title %></h4></div>
-            <%= link_to jobs_path(@job3) do %>
-              <%= image_tag("job3.png", class: "d-block w-100", height: 300) %>
-            <% end %>
-          </div>
-        </div>
+  <div id="jobs-carousel" class="custom-carousel">
+    <div class="carousel-container">
+      <div class="cards d-flex justify-content-center" id="job-cards-wrapper">
+        <!-- Les cartes seront affichées ici dynamiquement -->
       </div>
-
-      <div class="carousel-item">
-        <div class="cards d-flex justify-content-center">
-          <div class="card-trip">
-            <div><h4><%= @job4.title %></h4></div>
-            <%= link_to jobs_path(@job4) do %>
-              <%= image_tag("job4.png", class: "d-block w-100", height: 300) %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
+
+    <button class="carousel-control-prev" type="button" onclick="scrollJobs(-1)">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" onclick="scrollJobs(1)">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </div>
+
+<script>
+// Tableau de tous les jobs avec les vrais noms d'images
+const allJobs = [
+  {
+    title: '<%= @job1&.title %>',
+    imageSrc: '<%= asset_path("Gouvernant.png") %>',
+    imageClass: 'job-gouvernant',
+    path: '<%= job_path(@job1) if @job1 %>'
+  },
+  {
+    title: '<%= @job2&.title %>',
+    imageSrc: '<%= asset_path("Linger.png") %>',
+    imageClass: 'job-linger',
+    path: '<%= job_path(@job2) if @job2 %>'
+  },
+  {
+    title: '<%= @job3&.title %>',
+    imageSrc: '<%= asset_path("Femme de ménage.png") %>',
+    imageClass: 'job-femme-menage',
+    path: '<%= job_path(@job3) if @job3 %>'
+  },
+  {
+    title: '<%= @job4&.title %>',
+    imageSrc: '<%= asset_path("Cafetier.png") %>',
+    imageClass: 'job-cafetier',
+    path: '<%= job_path(@job4) if @job4 %>'
+  }
+];
+
+let currentIndex = 0;
+
+function renderJobs() {
+  const wrapper = document.getElementById('job-cards-wrapper');
+  wrapper.innerHTML = '';
+
+  // Afficher 3 cartes en commençant par currentIndex
+  for (let i = 0; i < 3; i++) {
+    const jobIndex = (currentIndex + i) % allJobs.length;
+    const job = allJobs[jobIndex];
+
+    const card = document.createElement('div');
+    card.className = 'card-trip';
+    card.innerHTML = `
+      <div><h4>${job.title}</h4></div>
+      <a href="${job.path}">
+        <img src="${job.imageSrc}" class="d-block w-100 ${job.imageClass}" height="300">
+      </a>
+    `;
+    wrapper.appendChild(card);
+  }
+}
+
+function scrollJobs(direction) {
+  currentIndex = (currentIndex + direction + allJobs.length) % allJobs.length;
+  renderJobs();
+}
+
+// Initialiser l'affichage au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  renderJobs();
+});
+</script>
+
+<style>
+.custom-carousel {
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  display: none;
+}
+
+.carousel-slide.active {
+  display: block;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control-prev {
+  left: 10px;
+}
+
+.carousel-control-next {
+  right: 10px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: 100% 100%;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+</style>
 
 <h2>Nos services de nettoyages</h2>
 <div class="box container">
@@ -97,6 +193,73 @@
     <% end %>
   </div>
 </div>
+
+<h2>Nos zones d'intervention</h2>
+<section class="intervention-areas-section">
+  <div class="container">
+    <div class="intervention-map-container">
+      <div class="intervention-map" id="intervention-map"></div>
+      <div class="intervention-cities">
+        <h3>Nos zones d'intervention</h3>
+        <ul class="cities-list">
+          <li><i class="fas fa-map-pin"></i> Paris</li>
+          <li><i class="fas fa-map-pin"></i> Valence</li>
+          <li><i class="fas fa-map-pin"></i> Bordeaux</li>
+          <li><i class="fas fa-map-pin"></i> Montpellier</li>
+          <li><i class="fas fa-map-pin"></i> Beaune</li>
+        </ul>
+        <p class="intervention-contact">Vous êtes hors de ces zones ? <%= link_to "Contactez-nous", contact_path %> pour discuter de votre demande.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Créer la carte
+    const map = L.map('intervention-map').setView([46.5, 2.5], 5);
+
+    // Ajouter la couche de tuiles OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Villes d'intervention avec coordonnées
+    const cities = [
+      { name: 'Paris', lat: 48.8566, lng: 2.3522, color: '#d4af37' },
+      { name: 'Valence', lat: 44.9339, lng: 4.8944, color: '#d4af37' },
+      { name: 'Bordeaux', lat: 44.8378, lng: -0.5792, color: '#d4af37' },
+      { name: 'Montpellier', lat: 43.6108, lng: 3.8767, color: '#d4af37' },
+      { name: 'Beaune', lat: 47.0234, lng: 4.8357, color: '#d4af37' }
+    ];
+
+    // Ajouter les marqueurs et cercles pour chaque ville
+    cities.forEach(function(city) {
+      // Cercle d'intervention (rayon de ~50km)
+      L.circle([city.lat, city.lng], {
+        color: city.color,
+        fillColor: city.color,
+        fillOpacity: 0.15,
+        weight: 2,
+        radius: 50000
+      }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
+
+      // Marqueur
+      L.circleMarker([city.lat, city.lng], {
+        radius: 8,
+        fillColor: city.color,
+        color: '#fff',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 1
+      }).addTo(map).bindPopup('<strong>' + city.name + '</strong><br/>Zone d\'intervention');
+    });
+  });
+</script>
 
 <h2>Pourquoi nous choisir ?</h2>
 <section class="why-us-section">

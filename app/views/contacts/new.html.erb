@@ -112,6 +112,27 @@
           </small>
         </div>
 
+        <div class="form-section">
+          <h3 class="section-title">
+            <i class="fas fa-comment-dots"></i>
+            Votre message
+          </h3>
+
+          <div class="form-group">
+            <%= f.label :message do %>
+              Message <span class="required">*</span>
+            <% end %>
+            <%= f.text_area :message,
+                placeholder: "Décrivez-nous votre besoin ou posez-nous vos questions...",
+                class: "form-input",
+                rows: 6 %>
+            <small class="form-hint">
+              <i class="fas fa-info-circle"></i>
+              Plus votre demande est détaillée, plus nous pourrons vous répondre précisément.
+            </small>
+          </div>
+        </div>
+
         <div class="form-actions">
           <%= f.submit "Envoyer ma demande", class: "btn-primary" %>
           <%= link_to "Annuler", root_path, class: "btn-secondary" %>

@@ -92,6 +92,8 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  align-items: center;
+  text-align: center;
 
   h4 {
     color: #1a1a1a;
@@ -116,10 +118,48 @@
     }
   }
 
+  .service-cta {
+    color: #d4af37;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+  }
+
+  .service-arrow {
+    color: #d4af37;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    animation: arrowBounce 2s ease-in-out infinite;
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+
+  .service-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+
+    .btn {
+      flex: 0 1 auto;
+      margin: 0;
+      text-align: center;
+    }
+  }
+
   .btn {
-    align-self: flex-start;
+    align-self: center;
     margin-top: auto;
-    padding: 10px 25px;
+    padding: 10px 20px;
     border-radius: 2px;
     background-color: #d4af37;
     color: #1a1a1a;
@@ -127,7 +167,7 @@
     text-decoration: none;
     transition: all 0.3s ease;
     letter-spacing: 0.5px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     border: 1px solid #d4af37;
 
     &:hover {

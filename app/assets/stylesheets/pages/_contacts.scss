@@ -334,21 +334,30 @@
       display: flex;
       align-items: center;
       gap: 8px;
-        flex-wrap: wrap;
+      flex-wrap: wrap;
 
-        i {
-          color: #d4af37;
-          font-size: 0.9rem;
+      i {
+        color: #d4af37;
+        font-size: 0.9rem;
+      }
+
+      .privacy-link-inline {
+        color: #d4af37;
+        text-decoration: underline;
+        margin-left: 5px;
+
+        &:hover {
+          color: #b8941f;
         }
+      }
+    }
+  }
 
-        .privacy-link-inline {
-          color: #d4af37;
-          text-decoration: underline;
-          margin-left: 5px;
+  .form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
 
-          &:hover {
-            color: #b8941f;
-          }
     @media (max-width: 576px) {
       flex-direction: column;
     }
@@ -452,6 +461,4 @@
       font-weight: 300;
     }
   }
-}
-}
 }

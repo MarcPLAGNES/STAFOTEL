@@ -13,8 +13,11 @@
           </div>
           <div class="service-content">
             <h4><%= service.name %></h4>
-            <p class="service-price"><%= number_to_currency(service.price, unit: "€", separator: ",", delimiter: " ") %> <span class="price-unit">/ h</span></p>
-            <%= link_to "En savoir plus", service_path(service), class: "btn btn-flat" %>
+            <p class="service-arrow"><i class="fas fa-arrow-down"></i></p>
+            <div class="service-buttons">
+              <%= link_to "En savoir plus", service_path(service), class: "btn btn-flat" %>
+              <%= link_to "Demander un devis", new_service_quote_path(service), class: "btn btn-secondary" %>
+            </div>
           </div>
         </div>
       <% end %>
