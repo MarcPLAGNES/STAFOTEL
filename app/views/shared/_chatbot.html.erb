@@ -1,0 +1,422 @@
+<div id="chatbot-widget">
+  <!-- Bouton flottant -->
+  <button id="chatbot-toggle" class="chatbot-button">
+    <i class="fas fa-comments"></i>
+    <span class="chatbot-badge">?</span>
+  </button>
+
+  <!-- Fenêtre du chatbot -->
+  <div id="chatbot-window" class="chatbot-window">
+    <div class="chatbot-header">
+      <h3>💬 Assistant STAFOTEL</h3>
+      <button id="chatbot-close" class="chatbot-close-btn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="chatbot-messages" id="chatbot-messages">
+      <div class="chatbot-message bot-message">
+        <div class="message-content">
+          Bonjour ! 👋 Comment puis-je vous aider aujourd'hui ?
+        </div>
+      </div>
+      <div class="chatbot-suggestions" id="chatbot-suggestions">
+        <button class="suggestion-btn" data-question="services">📋 Vos services</button>
+        <button class="suggestion-btn" data-question="zones">📍 Zones d'intervention</button>
+        <button class="suggestion-btn" data-question="devis">💰 Demander un devis</button>
+        <button class="suggestion-btn" data-question="recrutement">👤 Postuler</button>
+        <button class="suggestion-btn" data-question="difference">🔄 Sous-traitance vs Intérim</button>
+        <button class="suggestion-btn" data-question="contact">✉️ Nous contacter</button>
+      </div>
+    </div>
+
+    <div class="chatbot-input-area">
+      <input type="text" id="chatbot-input" placeholder="Posez votre question..." />
+      <button id="chatbot-send">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('chatbot-toggle');
+  const window = document.getElementById('chatbot-window');
+  const close = document.getElementById('chatbot-close');
+  const messages = document.getElementById('chatbot-messages');
+  const input = document.getElementById('chatbot-input');
+  const send = document.getElementById('chatbot-send');
+  const suggestions = document.querySelectorAll('.suggestion-btn');
+
+  // Base de connaissances FAQ
+  const faqDatabase = {
+    services: {
+      question: "Quels sont vos services ?",
+      answer: "STAFOTEL propose 3 formules :\n\n• **Sous-traitance** : Nous gérons l'intégralité de vos besoins en nettoyage\n• **Intérim** : Personnel qualifié pour vos pics d'activité\n• **Prestations ponctuelles** : Interventions à la demande\n\nNous intervenons en hôtellerie et restauration.",
+      link: "<%= services_path %>"
+    },
+    zones: {
+      question: "Dans quelles villes intervenez-vous ?",
+      answer: "Nous intervenons dans les villes suivantes :\n\n📍 Paris\n📍 Valence\n📍 Bordeaux\n📍 Montpellier\n📍 Beaune\n\nConsultez notre carte interactive pour plus de détails !",
+      link: "<%= root_path %>#intervention-map"
+    },
+    devis: {
+      question: "Comment demander un devis ?",
+      answer: "C'est simple ! Vous pouvez demander un devis gratuitement de 3 façons :\n\n1️⃣ Via notre formulaire en ligne\n2️⃣ Par téléphone\n3️⃣ Par email\n\nUn de nos experts vous recontactera sous 24h.",
+      link: "<%= services_path %>"
+    },
+    recrutement: {
+      question: "Comment postuler chez STAFOTEL ?",
+      answer: "Nous recrutons régulièrement ! 🎯\n\nConsultez nos offres d'emploi (Gouvernant(e), Femme/Valet de chambre, Linger(ère), Cafetier(ère)) et postulez directement en ligne.\n\nFormation assurée par notre Académie.",
+      link: "<%= jobs_path %>"
+    },
+    difference: {
+      question: "Quelle différence entre sous-traitance et intérim ?",
+      answer: "**Sous-traitance** : Nous gérons tout (recrutement, formation, gestion administrative, continuité 7j/7)\n\n**Intérim** : Personnel qualifié mis à disposition rapidement pour des besoins temporaires\n\nLa sous-traitance est idéale pour une solution clé en main, l'intérim pour des renforts ponctuels.",
+      link: null
+    },
+    contact: {
+      question: "Comment vous contacter ?",
+      answer: "Plusieurs moyens pour nous joindre :\n\n📧 Via notre formulaire de contact\n📞 Par téléphone\n🏢 À notre adresse\n\nNous répondons sous 24h !",
+      link: "<%= contact_path %>"
+    }
+  };
+
+  // Ouvrir/fermer le chatbot
+  toggle.addEventListener('click', () => {
+    window.classList.toggle('chatbot-open');
+    if (window.classList.contains('chatbot-open')) {
+      input.focus();
+    }
+  });
+
+  close.addEventListener('click', () => {
+    window.classList.remove('chatbot-open');
+  });
+
+  // Ajouter un message
+  function addMessage(text, isBot = true, hasLink = null) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chatbot-message ${isBot ? 'bot-message' : 'user-message'}`;
+
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    content.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    messageDiv.appendChild(content);
+
+    if (hasLink) {
+      const linkBtn = document.createElement('a');
+      linkBtn.href = hasLink;
+      linkBtn.className = 'message-link-btn';
+      linkBtn.textContent = 'Voir la page →';
+      messageDiv.appendChild(linkBtn);
+    }
+
+    messages.appendChild(messageDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // Gérer les suggestions
+  suggestions.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const questionKey = btn.dataset.question;
+      const faq = faqDatabase[questionKey];
+
+      if (faq) {
+        // Afficher directement la réponse sans afficher la question
+        addMessage(faq.answer, true, faq.link);
+      }
+    });
+  });
+
+  // Gérer l'envoi de message
+  function handleSend() {
+    const text = input.value.trim();
+    if (!text) return;
+
+    addMessage(text, false);
+    input.value = '';
+
+    setTimeout(() => {
+      // Recherche simple dans la FAQ
+      let found = false;
+      const lowerText = text.toLowerCase();
+
+      for (const [key, faq] of Object.entries(faqDatabase)) {
+        const keywords = {
+          services: ['service', 'prestation', 'offre', 'propose'],
+          zones: ['ville', 'zone', 'où', 'intervene', 'secteur'],
+          devis: ['devis', 'tarif', 'prix', 'coût'],
+          recrutement: ['postul', 'recrut', 'emploi', 'travail', 'candidat'],
+          difference: ['différence', 'sous-traitance', 'intérim'],
+          contact: ['contact', 'joindre', 'appel', 'téléphone', 'email']
+        };
+
+        if (keywords[key] && keywords[key].some(kw => lowerText.includes(kw))) {
+          addMessage(faq.answer, true, faq.link);
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        addMessage(
+          "Je n'ai pas de réponse précise à cette question. 🤔\n\nVoulez-vous nous contacter directement ? Notre équipe vous répondra rapidement !",
+          true,
+          "<%= contact_path %>"
+        );
+      }
+    }, 600);
+  }
+
+  send.addEventListener('click', handleSend);
+  input.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleSend();
+  });
+});
+</script>
+
+<style>
+#chatbot-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.chatbot-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #f4d67a);
+  border: none;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chatbot-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+}
+
+.chatbot-button i {
+  color: #1a1a1a;
+  font-size: 28px;
+}
+
+.chatbot-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4444;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-window {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 380px;
+  height: 550px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatbot-window.chatbot-open {
+  display: flex;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chatbot-header {
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  color: white;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chatbot-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+
+.chatbot-close-btn:hover {
+  transform: scale(1.1);
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.chatbot-message {
+  margin-bottom: 16px;
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bot-message {
+  justify-content: flex-start;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.message-content {
+  max-width: 75%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bot-message .message-content {
+  background: white;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.user-message .message-content {
+  background: linear-gradient(135deg, #d4af37, #f4d67a);
+  color: #1a1a1a;
+}
+
+.chatbot-suggestions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.suggestion-btn {
+  background: white;
+  border: 1px solid #d4af37;
+  color: #1a1a1a;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.suggestion-btn:hover {
+  background: #d4af37;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.message-link-btn {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: #d4af37;
+  color: #1a1a1a;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.message-link-btn:hover {
+  background: #b8941f;
+  transform: translateX(3px);
+}
+
+.chatbot-input-area {
+  display: flex;
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  gap: 10px;
+}
+
+#chatbot-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  font-size: 14px;
+  outline: none;
+}
+
+#chatbot-input:focus {
+  border-color: #d4af37;
+}
+
+#chatbot-send {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #f4d67a);
+  border: none;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#chatbot-send:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+@media (max-width: 768px) {
+  .chatbot-window {
+    width: calc(100vw - 40px);
+    height: 500px;
+    right: 20px;
+  }
+
+  .chatbot-suggestions {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
