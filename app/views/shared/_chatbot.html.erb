@@ -25,6 +25,7 @@
         <button class="suggestion-btn" data-question="zones">📍 Zones d'intervention</button>
         <button class="suggestion-btn" data-question="devis">💰 Demander un devis</button>
         <button class="suggestion-btn" data-question="recrutement">👤 Postuler</button>
+        <button class="suggestion-btn" data-question="academie">🎓 L'Académie</button>
         <button class="suggestion-btn" data-question="difference">🔄 Sous-traitance vs Intérim</button>
         <button class="suggestion-btn" data-question="contact">✉️ Nous contacter</button>
       </div>
@@ -68,13 +69,18 @@ document.addEventListener('DOMContentLoaded', function() {
     },
     recrutement: {
       question: "Comment postuler chez STAFOTEL ?",
-      answer: "Nous recrutons régulièrement ! 🎯\n\nConsultez nos offres d'emploi (Gouvernant(e), Femme/Valet de chambre, Linger(ère), Cafetier(ère)) et postulez directement en ligne.\n\nFormation assurée par notre Académie.",
+      answer: "Nous recrutons régulièrement ! 🎯\n\nCliquez sur l'un de nos métiers (Gouvernant(e), Femme/Valet de chambre, Linger(ère), Cafetier(ère)) et envoyez-nous votre candidature directement via le formulaire.\n\nFormation assurée par notre Académie.",
       link: "<%= jobs_path %>"
     },
     difference: {
       question: "Quelle différence entre sous-traitance et intérim ?",
       answer: "**Sous-traitance** : Nous gérons tout (recrutement, formation, gestion administrative, continuité 7j/7)\n\n**Intérim** : Personnel qualifié mis à disposition rapidement pour des besoins temporaires\n\nLa sous-traitance est idéale pour une solution clé en main, l'intérim pour des renforts ponctuels.",
       link: null
+    },
+    academie: {
+      question: "Qu'est-ce que Stafotel Academy ?",
+      answer: "🎓 **Stafotel Academy** forme vos équipes aux standards hôteliers !\n\n• Parcours hôtellerie clés en main\n• Coaching terrain et modules courts\n• Validation des acquis et suivi\n\n+200h de pratique guidée, 100% focus opérationnel.",
+      link: "https://www.stafotel-academy.com/hotellerie"
     },
     contact: {
       question: "Comment vous contacter ?",
@@ -150,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
           zones: ['ville', 'zone', 'où', 'intervene', 'secteur'],
           devis: ['devis', 'tarif', 'prix', 'coût'],
           recrutement: ['postul', 'recrut', 'emploi', 'travail', 'candidat'],
+          academie: ['académie', 'academy', 'formation', 'former', 'apprendre'],
           difference: ['différence', 'sous-traitance', 'intérim'],
           contact: ['contact', 'joindre', 'appel', 'téléphone', 'email']
         };
