@@ -91,6 +91,49 @@ function scrollJobs(direction) {
 document.addEventListener('DOMContentLoaded', function() {
   renderJobs();
 });
+
+// --- Carousel Tips ---
+const allTips = <%= raw(@tips.map { |t| { title: t.title, intro: t.intro, imageSrc: asset_path(t.image), path: tip_path(t) } }.to_json) %>;
+let currentTipIndex = 0;
+
+function renderTips() {
+  const wrapper = document.getElementById('tip-cards-wrapper');
+  if (!wrapper) return;
+  wrapper.innerHTML = '';
+
+  if (!allTips.length) {
+    wrapper.innerHTML = '<p class="text-muted">Aucune astuce disponible pour le moment.</p>';
+    return;
+  }
+
+  const visible = Math.min(3, allTips.length);
+  for (let i = 0; i < visible; i++) {
+    const tipIndex = (currentTipIndex + i) % allTips.length;
+    const tip = allTips[tipIndex];
+
+    const card = document.createElement('div');
+    card.className = 'card-trip tip-card-compact';
+    card.innerHTML = `
+      <div class="tip-title"><h4>${tip.title}</h4></div>
+      <a href="${tip.path}">
+        <img src="${tip.imageSrc}" class="d-block w-100" height="260" alt="${tip.title}">
+      </a>
+      <p class="tip-intro-snippet">${(tip.intro || '').slice(0, 110)}${(tip.intro || '').length > 110 ? '…' : ''}</p>
+      <a href="${tip.path}" class="btn btn-flat">Lire l'astuce</a>
+    `;
+    wrapper.appendChild(card);
+  }
+}
+
+function scrollTips(direction) {
+  if (!allTips.length) return;
+  currentTipIndex = (currentTipIndex + direction + allTips.length) % allTips.length;
+  renderTips();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  renderTips();
+});
 </script>
 
 <style>
@@ -364,15 +407,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h2>Nos astuces pour nettoyer</h2>
 <section class="tips-section">
-  <div id="carousel-tips" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="cards d-flex justify-content-center">
-          <div class="card-trip">
-            <div><h4>Bien nettoyer les vitres de salle de bain</h4></div>
-            <%= link_to tips_path do %>
-              <%= image_tag("Tips1.JPG", class: "d-block w-100", alt: "Astuce: vitres de salle de bain") %>
-            <% end %>
+  <div id="tips-carousel" class="custom-carousel">
+    <div class="carousel-container">
+      <div class="cards d-flex justify-content-center" id="tip-cards-wrapper">
+        <!-- Tips cards render ici -->
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" onclick="scrollTips(-1)">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" onclick="scrollTips(1)">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+<h2>Stafotel Academy</h2>
+<section class="academy-section">
+  <div class="academy-card">
+    <div class="academy-content">
+      <div class="academy-info">
+        <p class="academy-tag">Formation</p>
+        <h3>Notre académie forme vos équipes aux standards hôteliers</h3>
+        <p class="academy-text">Programmes opérationnels, gestes professionnels et excellence du service pour monter en compétences rapidement.</p>
+        <ul class="academy-points">
+          <li><i class="fas fa-graduation-cap"></i> Parcours hôtellerie clés en main</li>
+          <li><i class="fas fa-chalkboard-teacher"></i> Coaching terrain et modules courts</li>
+          <li><i class="fas fa-certificate"></i> Validation des acquis et suivi</li>
+        </ul>
+        <%= link_to "Découvrir l'académie", "https://www.stafotel-academy.com/hotellerie", class: "academy-button", target: "_blank", rel: "noopener" %>
+      </div>
+      <div class="academy-highlight">
+        <div class="highlight-card">
+          <p class="highlight-title">Stafotel Academy</p>
+          <p class="highlight-lead">Formations pratiques pour vos équipes</p>
+          <div class="highlight-metrics">
+            <div class="metric">
+              <span class="metric-value">+200h</span>
+              <span class="metric-label">de pratique guidée</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">100%</span>
+              <span class="metric-label">focus opérationnel</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">3</span>
+              <span class="metric-label">parcours dédiés</span>
+            </div>
           </div>
         </div>
       </div>

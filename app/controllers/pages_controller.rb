@@ -5,6 +5,7 @@ class PagesController < ApplicationController
     @job3 = Job.offset(2).first
     @job4 = Job.offset(3).first
     @services = Service.all
+    @tips = Tip.all.limit(6)
   end
 
   def jobs
