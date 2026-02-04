@@ -149,73 +149,6 @@ document.addEventListener('turbo:load', function() {
 });
 </script>
 
-<style>
-.custom-carousel {
-  position: relative;
-}
-
-#tip-cards-wrapper {
-  display: none;
-}
-
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-slide {
-  display: none;
-}
-
-.carousel-slide.active {
-  display: block;
-}
-
-.carousel-control-prev,
-.carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.carousel-control-prev:hover,
-.carousel-control-next:hover {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.carousel-control-prev {
-  left: 10px;
-}
-
-.carousel-control-next {
-  right: 10px;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-size: 100% 100%;
-}
-
-.carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
-}
-
-.carousel-control-next-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-}
-</style>
-
 <h2>Nos services de nettoyages</h2>
 <div class="box container">
   <div id="carousel-services" class="carousel slide" data-ride="carousel">
@@ -422,27 +355,10 @@ document.addEventListener('turbo:load', function() {
   </div>
 </section>
 
-<h2>Nos astuces pour nettoyer</h2>
-<section class="tips-section">
-  <div id="tips-carousel" class="custom-carousel">
-    <div class="carousel-container">
-      <div class="cards d-flex justify-content-center" id="tip-cards-wrapper">
-        <!-- Tips cards render ici -->
-      </div>
-    </div>
-
-    <button class="carousel-control-prev" type="button" onclick="scrollTips(-1)">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" onclick="scrollTips(1)">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
-
-<h2>Stafotel Academy</h2>
+<h2>
+  Stafotel Academy
+  <%= image_tag("LogoAcademy.png", alt: "Stafotel Academy", class: "academy-h2-logo") %>
+</h2>
 <section class="academy-section">
   <div class="academy-card">
     <div class="academy-content">
@@ -481,6 +397,26 @@ document.addEventListener('turbo:load', function() {
   </div>
 </section>
 
+<h2>Nos astuces pour nettoyer</h2>
+<section class="tips-section">
+  <div id="tips-carousel" class="custom-carousel">
+    <div class="carousel-container">
+      <div class="cards d-flex justify-content-center" id="tip-cards-wrapper">
+        <!-- Tips cards render ici -->
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" onclick="scrollTips(-1)">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" onclick="scrollTips(1)">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
 <h2>Nos clients</h2>
 <section class="clients-section">
   <div class="clients-logos">
@@ -488,6 +424,11 @@ document.addEventListener('turbo:load', function() {
     <%= image_tag("Partenaire 2.png", alt: "Partenaire 2", class: "partner-logo") %>
     <%= image_tag("Partenaire 3.jpg", alt: "Partenaire 3", class: "partner-logo") %>
     <%= image_tag("Partenaire 4.png", alt: "Partenaire 4", class: "partner-logo") %>
-    <%= image_tag("Partenaire 4bis.png", alt: "Partenaire 4bis", class: "partner-logo") %>
+    <%= image_tag("Partenaire 5.png", alt: "Partenaire 5", class: "partner-logo") %>
+    <%= image_tag("Partenaire 6.png", alt: "Partenaire 6", class: "partner-logo") %>
+    <%= image_tag("Partenaire 7.png", alt: "Partenaire 7", class: "partner-logo") %>
+    <%= image_tag("Partenaire 8.png", alt: "Partenaire 8", class: "partner-logo") %>
+    <%= image_tag("Partenaire 9.png", alt: "Partenaire 9", class: "partner-logo") %>
+    <%= image_tag("Partenaire 10.png", alt: "Partenaire 10", class: "partner-logo") %>
   </div>
 </section>

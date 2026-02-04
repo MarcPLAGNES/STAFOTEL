@@ -44,14 +44,7 @@
             Vos informations
           </h3>
           <div class="form-group">
-            <%= f.label :contact_id, "Sélectionnez votre profil" do %>
-              Sélectionnez votre profil <span class="required">*</span>
-            <% end %>
-            <%= f.collection_select :contact_id, Contact.all, :id,
-                lambda { |c| "#{c.firstname} #{c.lastname} - #{c.email}" },
-                { include_blank: "-- Choisir un contact --" },
-                class: "form-input" %>
-            <small class="form-hint">Si vous n'avez pas encore de profil, veuillez nous contacter.</small>
+            <p class="form-hint">Votre message sera envoyé directement à notre équipe.</p>
           </div>
         </div>
 
@@ -74,6 +67,7 @@
 
         <%= f.hidden_field :job_id, value: @job.id %>
         <%= f.hidden_field :status, value: "pending" %>
+        <%= f.hidden_field :contact_id, value: @admin_contact&.id %>
 
         <div class="form-actions">
           <%= f.submit "Envoyer ma candidature", class: "btn-primary" %>

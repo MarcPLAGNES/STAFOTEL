@@ -15,14 +15,19 @@ class ApplicationsController < ApplicationController
   def new
     @job = Job.find(params[:job_id])
     @application = Application.new(job: @job)
+    ensure_admin_contact
+    @admin_contact = Contact.find_by(email: admin_email)
   end
 
   def update_status
     head :ok
   end
   def create
-    @application = Application.new(application_params)
+    ensure_admin_contact
+    admin_contact = Contact.find_by(email: admin_email)
+    @application = Application.new(application_params.merge(contact_id: admin_contact&.id, status: "pending"))
     if @application.save
+      ApplicationSubmissionMailer.with(application: @application).new_application.deliver_now
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Candidature créée." }
         format.json { render json: @application, status: :created }
@@ -52,5 +57,17 @@ class ApplicationsController < ApplicationController
   def application_params
     # On ne permet PAS de modifier le status directement (seulement l'admin)
     params.require(:application).permit(:message, :contact_id, :job_id)
+  end
+
+  def ensure_admin_contact
+    Contact.find_or_create_by!(email: admin_email) do |contact|
+      contact.firstname = "Admin"
+      contact.lastname = "Stafotel"
+      contact.phone = "+33000000000"
+    end
+  end
+
+  def admin_email
+    Rails.application.credentials.dig(:stafotel, :admin_email) || ENV["STAFOTEL_ADMIN_EMAIL"] || "admin@stafotel.com"
   end
 end

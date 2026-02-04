@@ -1,7 +1,7 @@
 <div id="chatbot-widget">
   <!-- Bouton flottant -->
   <button id="chatbot-toggle" class="chatbot-button">
-    <i class="fas fa-comments"></i>
+    <i class="fas fa-user-circle"></i>
     <span class="chatbot-badge">?</span>
   </button>
 
@@ -41,14 +41,26 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+function initChatbot() {
   const toggle = document.getElementById('chatbot-toggle');
-  const window = document.getElementById('chatbot-window');
+  const chatWindow = document.getElementById('chatbot-window');
   const close = document.getElementById('chatbot-close');
   const messages = document.getElementById('chatbot-messages');
   const input = document.getElementById('chatbot-input');
   const send = document.getElementById('chatbot-send');
   const suggestions = document.querySelectorAll('.suggestion-btn');
+
+  // Vérifier que tous les éléments existent
+  if (!toggle || !chatWindow || !close || !messages || !input || !send) {
+    console.error('Chatbot elements not found');
+    return;
+  }
+
+  // Éviter d'ajouter plusieurs fois les event listeners
+  if (toggle.dataset.chatbotInitialized === 'true') {
+    return;
+  }
+  toggle.dataset.chatbotInitialized = 'true';
 
   // Base de connaissances FAQ
   const faqDatabase = {
@@ -91,14 +103,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Ouvrir/fermer le chatbot
   toggle.addEventListener('click', () => {
-    window.classList.toggle('chatbot-open');
-    if (window.classList.contains('chatbot-open')) {
+    chatWindow.classList.toggle('chatbot-open');
+    if (chatWindow.classList.contains('chatbot-open')) {
       input.focus();
     }
   });
 
   close.addEventListener('click', () => {
-    window.classList.remove('chatbot-open');
+    chatWindow.classList.remove('chatbot-open');
   });
 
   // Ajouter un message
@@ -182,7 +194,12 @@ document.addEventListener('DOMContentLoaded', function() {
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') handleSend();
   });
-});
+}
+
+// Initialiser le chatbot au chargement et à chaque navigation Turbo
+document.addEventListener('DOMContentLoaded', initChatbot);
+document.addEventListener('turbo:load', initChatbot);
+document.addEventListener('turbo:render', initChatbot);
 </script>
 
 <style>
@@ -194,25 +211,63 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .chatbot-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #d4af37, #f4d67a);
+  width: 100px;
+  height: 100px;
   border: none;
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
   cursor: pointer;
   position: relative;
   transition: all 0.3s ease;
+  padding: 0;
+  overflow: visible;
+  background-image: url('<%= image_path("Chatbot image2.png") %>');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  animation: chatbot-pulse 2s infinite;
+}
+
+@keyframes chatbot-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+    transform: scale(1.05);
+  }
 }
 
 .chatbot-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  transform: scale(1.15);
+  box-shadow: 0 16px 40px rgba(212, 175, 55, 0.6);
+  animation: none;
+}
+
+.chatbot-button::after {
+  content: '💬';
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #d4af37, #f4d67a);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .chatbot-button i {
   color: #1a1a1a;
   font-size: 28px;
+  display: none;
 }
 
 .chatbot-badge {

@@ -10,6 +10,7 @@ class ContactsController < ApplicationController
     @contact.user = current_user if user_signed_in?
 
     if @contact.save
+      ContactSubmissionMailer.with(contact: @contact, message: params.dig(:contact, :message)).new_contact.deliver_now
       # TODO: Envoyer un email de confirmation (avec sanitization)
       redirect_to root_path, notice: "Merci pour votre message ! Nous vous contacterons très prochainement."
     else
