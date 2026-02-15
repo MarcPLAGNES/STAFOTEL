@@ -58,6 +58,7 @@ gem "devise", "~> 4.9"
 gem "faker"
 gem "ruby-openai"
 gem "solid_cable"
+gem "rack-attack", "~> 6.7"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
