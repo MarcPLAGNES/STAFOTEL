@@ -9,6 +9,12 @@
   background-position: center top;
 }
 
+@media (max-width: 768px) {
+  .banner {
+    background-attachment: scroll;
+  }
+}
+
 // Academy logo in h2
 .academy-h2-logo {
   height: 120px;
@@ -231,6 +237,11 @@
   &:hover .tip-content h4 {
     color: #d4af37;
     text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -559,6 +570,12 @@ section + h2,
     flex: 0 0 calc(33.333% - 20px);
     max-width: calc(33.333% - 20px);
     min-width: 300px;
+
+    @media (max-width: 768px) {
+      flex: 0 0 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
 
     img {
       width: 100%;
