@@ -564,8 +564,9 @@ section + h2,
   position: relative;
 }
 
-// Jobs carousel - ensure all cards have the same size
-#jobs-carousel {
+// Jobs/Services carousels - ensure all cards have the same size
+#jobs-carousel,
+#services-carousel {
   .card-trip {
     flex: 0 0 calc(33.333% - 20px);
     max-width: calc(33.333% - 20px);
@@ -818,6 +819,38 @@ section + h2,
 // Carousel styles
 .custom-carousel {
   position: relative;
+}
+
+#services-carousel {
+  @media (max-width: 768px) {
+    .cards {
+      gap: 20px;
+      padding: 0 20px;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #jobs-carousel .cards,
+  #services-carousel .cards {
+    gap: 20px;
+    padding: 0 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #job-cards-wrapper .card-trip,
+  #service-cards-wrapper .card-trip {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  #job-cards-wrapper .card-trip:not(:first-child),
+  #service-cards-wrapper .card-trip:not(:first-child) {
+    display: none;
+  }
 }
 
 #tip-cards-wrapper {
