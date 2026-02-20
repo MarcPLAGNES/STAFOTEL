@@ -1,11 +1,9 @@
 class PagesController < ApplicationController
   def home
-    @job1 = Job.first
-    @job2 = Job.offset(1).first
-    @job3 = Job.offset(2).first
-    @job4 = Job.offset(3).first
+    @jobs = Job.limit(4).to_a
+    @job1, @job2, @job3, @job4 = @jobs
     @services = Service.all
-    @tips = Tip.all.limit(6)
+    @tips = Tip.limit(6)
   end
 
   def jobs

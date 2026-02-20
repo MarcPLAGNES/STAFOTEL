@@ -15,12 +15,12 @@
     <div class="job-detail-image">
       <%
         job_images = {
-          'Cafetier(ère)' => 'Cafetier.png',
-          'Gouvernant(e)' => 'Gouvernant.png',
-          'Valet/Femme de chambre' => 'Femme de ménage.png',
-          'Linger(ère)' => 'Linger.png'
+          'Cafetier(ère)' => 'Cafetier.webp',
+          'Gouvernant(e)' => 'Gouvernant.webp',
+          'Valet/Femme de chambre' => 'Femme de ménage.webp',
+          'Linger(ère)' => 'Linger.webp'
         }
-        image_name = job_images[@job.title] || 'Gouvernant.png'
+        image_name = job_images[@job.title] || 'Gouvernant.webp'
       %>
       <%= image_tag(image_name, alt: @job.title, class: "detail-image") %>
     </div>

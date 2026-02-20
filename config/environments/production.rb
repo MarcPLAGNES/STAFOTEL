@@ -22,6 +22,9 @@ Rails.application.configure do
 
   # Enable serving static files from `public/` when the platform sets this env var.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
+  config.public_file_server.headers = {
+    "Cache-Control" => "public, max-age=31536000, immutable"
+  }
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -63,6 +66,13 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+
+  # Compress text responses (HTML, CSS, JS, JSON) to reduce transfer size.
+  config.middleware.use Rack::Deflater
+
+  # Improve rendering performance by deferring non-critical image loading by default.
+  config.action_view.image_loading = "lazy"
+  config.action_view.image_decoding = "async"
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
