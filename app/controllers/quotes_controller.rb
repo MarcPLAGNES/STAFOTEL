@@ -37,25 +37,28 @@ class QuotesController < ApplicationController
     quote_input = params.require(:quote)
     normalized_email = quote_input[:contact_email].to_s.strip.downcase
 
-    # Créer ou trouver le contact
+    # Réutiliser un contact existant (même email), sinon en créer un nouveau
     @contact = Contact
       .where(user: current_user)
-      .where("LOWER(email) = ?", normalized_email)
-      .first_or_initialize
+      .where("LOWER(TRIM(email)) = ?", normalized_email)
+      .first
 
-    @contact.assign_attributes(
-      email: normalized_email,
-      firstname: quote_input[:contact_firstname],
-      lastname: quote_input[:contact_lastname],
-      phone: quote_input[:contact_phone]
-    )
+    if @contact.nil?
+      @contact = Contact.new(
+        user: current_user,
+        email: normalized_email,
+        firstname: quote_input[:contact_firstname],
+        lastname: quote_input[:contact_lastname],
+        phone: quote_input[:contact_phone]
+      )
 
-    unless @contact.save
-      respond_to do |format|
-        format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
-        format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+      unless @contact.save
+        respond_to do |format|
+          format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
+          format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+        end
+        return
       end
-      return
     end
 
     # Créer le devis avec le contact et status par défaut
