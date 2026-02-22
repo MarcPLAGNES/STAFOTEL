@@ -48,6 +48,7 @@
 
     <div class="contact-form-card">
       <%= form_with(model: @contact, url: contacts_path, local: true, class: "contact-form") do |f| %>
+        <%= hidden_field_tag :source, params[:source] %>
         <% if @contact.errors.any? %>
           <div class="alert alert-danger">
             <h4><%= pluralize(@contact.errors.count, "erreur") %></h4>

@@ -52,3 +52,34 @@
   letter-spacing: 0.5px;
   color: #666;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 28px 20px;
+    margin-top: 35px;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .footer-links a {
+    font-size: 1rem;
+    padding: 10px 12px;
+
+    i {
+      font-size: 1.5rem;
+    }
+  }
+
+  .footer-copyright {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+}

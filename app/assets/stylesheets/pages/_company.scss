@@ -61,8 +61,8 @@
 
 .founder-content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 44px;
   align-items: center;
 
   .founder-text {
@@ -101,12 +101,42 @@
   }
 
   .founder-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 14px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(212, 175, 55, 0.2), rgba(255, 255, 255, 0.95));
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.14);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
     img {
       width: 100%;
+      max-width: 680px;
       height: auto;
+      object-fit: cover;
+      object-position: center;
       border-radius: 2px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       transition: transform 0.6s ease;
+    }
+
+    .founder-portrait {
+      width: 100%;
+      max-width: 680px;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.85);
     }
 
     &:hover img {
@@ -359,7 +389,16 @@
 
   .founder-content {
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 28px;
+
+    .founder-image {
+      order: -1;
+      padding: 10px;
+
+      .founder-portrait {
+        max-width: 100%;
+      }
+    }
 
     .founder-text {
       h2 {
@@ -430,6 +469,75 @@
         padding: 12px 30px;
         font-size: 0.95rem;
       }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .company-hero {
+    padding: 62px 14px;
+
+    .company-hero-content {
+      h1 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      .company-subtitle {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .company-container {
+    padding: 28px 14px;
+  }
+
+  .founder-section {
+    margin-bottom: 70px;
+  }
+
+  .founder-content {
+    gap: 20px;
+
+    .founder-image {
+      padding: 8px;
+
+      &::before {
+        inset: 5px;
+      }
+    }
+
+    .founder-text {
+      h2 {
+        font-size: 2rem;
+      }
+
+      .founder-title {
+        font-size: 1rem;
+        margin-bottom: 20px;
+      }
+
+      .founder-story {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .values-section h2,
+  .mission-section .mission-content h2,
+  .company-cta h2 {
+    font-size: 1.9rem;
+  }
+
+  .company-cta {
+    padding: 44px 18px;
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 28px;
     }
   }
 }

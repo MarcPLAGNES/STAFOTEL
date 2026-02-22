@@ -50,6 +50,7 @@ class QuotesController < ApplicationController
     @quote.status = "pending"
 
     if @quote.save
+      QuoteSubmissionMailer.with(quote: @quote).new_quote.deliver_now
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Devis créé." }
         format.json { render json: @quote, status: :created }

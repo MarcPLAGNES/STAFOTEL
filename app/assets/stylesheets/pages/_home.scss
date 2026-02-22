@@ -5,6 +5,7 @@
   background-color: transparent;
   position: relative;
   background-size: cover;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center top;
 }
@@ -12,6 +13,10 @@
 @media (max-width: 768px) {
   .banner {
     background-attachment: scroll;
+    background-position: center center;
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 20px 16px 140px 16px;
   }
 }
 
