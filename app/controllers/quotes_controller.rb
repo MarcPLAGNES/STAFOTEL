@@ -37,11 +37,18 @@ class QuotesController < ApplicationController
     quote_input = params.require(:quote)
     normalized_email = quote_input[:contact_email].to_s.strip.downcase
 
-    # Réutiliser un contact existant (même email), sinon en créer un nouveau
+    # Réutiliser un contact existant (même email), sinon en créer un nouveau.
+    # Le fallback Ruby couvre les emails historiques mal normalisés en base.
     @contact = Contact
       .where(user: current_user)
       .where("LOWER(TRIM(email)) = ?", normalized_email)
       .first
+
+    if @contact.nil?
+      @contact = Contact.where(user: current_user).find do |contact|
+        contact.email.to_s.strip.downcase == normalized_email
+      end
+    end
 
     if @contact.nil?
       @contact = Contact.new(
@@ -52,10 +59,41 @@ class QuotesController < ApplicationController
         phone: quote_input[:contact_phone]
       )
 
-      unless @contact.save
+      begin
+        contact_saved = @contact.save
+      rescue ActiveRecord::RecordNotUnique
+        contact_saved = false
+        @contact.errors.add(:email, :taken)
+      end
+
+      unless contact_saved
+        if @contact.errors.added?(:email, :taken)
+          existing_contact = Contact.where(user: current_user).find do |contact|
+            contact.email.to_s.strip.downcase == normalized_email
+          end
+
+          if existing_contact.present?
+            @contact = existing_contact
+          else
+            respond_to do |format|
+              format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
+              format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+            end
+            return
+          end
+        else
+          respond_to do |format|
+            format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
+            format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+          end
+          return
+        end
+      end
+
+      if @contact.nil?
         respond_to do |format|
-          format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
-          format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+          format.html { redirect_to root_path, alert: "Impossible de retrouver un contact valide pour cet email." }
+          format.json { render json: { errors: ["Impossible de retrouver un contact valide pour cet email."] }, status: :unprocessable_entity }
         end
         return
       end
