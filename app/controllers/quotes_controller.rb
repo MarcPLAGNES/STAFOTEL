@@ -50,7 +50,21 @@ class QuotesController < ApplicationController
       end
     end
 
-    if @contact.nil?
+    if @contact.present?
+      @contact.assign_attributes(
+        firstname: quote_input[:contact_firstname].presence || @contact.firstname,
+        lastname: quote_input[:contact_lastname].presence || @contact.lastname,
+        phone: quote_input[:contact_phone].presence || @contact.phone
+      )
+
+      unless @contact.save
+        respond_to do |format|
+          format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
+          format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+        end
+        return
+      end
+    else
       @contact = Contact.new(
         user: current_user,
         email: normalized_email,

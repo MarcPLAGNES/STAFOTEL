@@ -6,15 +6,42 @@ class ContactsController < ApplicationController
   end
 
   def create
-    @contact = Contact.new(contact_params)
-    @contact.user = current_user if user_signed_in?
+    contact_input = contact_params
+    normalized_email = contact_input[:email].to_s.strip.downcase
+
+    @contact = Contact
+      .where(user: current_user)
+      .where("LOWER(TRIM(email)) = ?", normalized_email)
+      .first
+
+    if @contact.nil?
+      @contact = Contact.where(user: current_user).find do |contact|
+        contact.email.to_s.strip.downcase == normalized_email
+      end
+    end
+
+    if @contact.present?
+      @contact.assign_attributes(
+        firstname: contact_input[:firstname],
+        lastname: contact_input[:lastname],
+        phone: contact_input[:phone]
+      )
+    else
+      @contact = Contact.new(contact_input)
+      @contact.user = current_user if user_signed_in?
+      @contact.email = normalized_email
+    end
 
     if @contact.save
-      ContactSubmissionMailer.with(
-        contact: @contact,
-        message: params.dig(:contact, :message),
-        recipient_email: recipient_email_for_source
-      ).new_contact.deliver_now
+      begin
+        ContactSubmissionMailer.with(
+          contact: @contact,
+          message: params.dig(:contact, :message),
+          recipient_email: recipient_email_for_source
+        ).new_contact.deliver_now
+      rescue StandardError => e
+        Rails.logger.error("Contact mail delivery failed for contact ##{@contact.id}: #{e.class} - #{e.message}")
+      end
       # TODO: Envoyer un email de confirmation (avec sanitization)
       redirect_to root_path, notice: "Merci pour votre message ! Nous vous contacterons très prochainement."
     else
