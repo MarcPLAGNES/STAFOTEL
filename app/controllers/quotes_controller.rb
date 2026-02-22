@@ -35,13 +35,16 @@ class QuotesController < ApplicationController
 
   def create
     quote_input = params.require(:quote)
+    normalized_email = quote_input[:contact_email].to_s.strip.downcase
 
     # Créer ou trouver le contact
-    @contact = Contact.find_or_initialize_by(
-      email: quote_input[:contact_email],
-      user: current_user
-    )
+    @contact = Contact
+      .where(user: current_user)
+      .where("LOWER(email) = ?", normalized_email)
+      .first_or_initialize
+
     @contact.assign_attributes(
+      email: normalized_email,
       firstname: quote_input[:contact_firstname],
       lastname: quote_input[:contact_lastname],
       phone: quote_input[:contact_phone]
