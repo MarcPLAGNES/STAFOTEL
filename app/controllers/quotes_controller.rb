@@ -34,14 +34,25 @@ class QuotesController < ApplicationController
   end
 
   def create
+    quote_input = params.require(:quote)
+
     # Créer ou trouver le contact
-    @contact = Contact.find_or_create_by(
-      email: params[:quote][:contact_email],
+    @contact = Contact.find_or_initialize_by(
+      email: quote_input[:contact_email],
       user: current_user
-    ) do |contact|
-      contact.firstname = params[:quote][:contact_firstname]
-      contact.lastname = params[:quote][:contact_lastname]
-      contact.phone = params[:quote][:contact_phone]
+    )
+    @contact.assign_attributes(
+      firstname: quote_input[:contact_firstname],
+      lastname: quote_input[:contact_lastname],
+      phone: quote_input[:contact_phone]
+    )
+
+    unless @contact.save
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: @contact.errors.full_messages.to_sentence }
+        format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+      end
+      return
     end
 
     # Créer le devis avec le contact et status par défaut
@@ -50,7 +61,12 @@ class QuotesController < ApplicationController
     @quote.status = "pending"
 
     if @quote.save
-      QuoteSubmissionMailer.with(quote: @quote).new_quote.deliver_now
+      begin
+        QuoteSubmissionMailer.with(quote: @quote).new_quote.deliver_now
+      rescue StandardError => e
+        Rails.logger.error("Quote mail delivery failed for quote ##{@quote.id}: #{e.class} - #{e.message}")
+      end
+
       respond_to do |format|
         format.html { redirect_to root_path, notice: "Devis créé." }
         format.json { render json: @quote, status: :created }
