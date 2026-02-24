@@ -119,14 +119,23 @@ class QuotesController < ApplicationController
     @quote.status = "pending"
 
     if @quote.save
+      mail_delivery_failed = false
+
       begin
         QuoteSubmissionMailer.with(quote: @quote).new_quote.deliver_now
       rescue StandardError => e
+        mail_delivery_failed = true
         Rails.logger.error("Quote mail delivery failed for quote ##{@quote.id}: #{e.class} - #{e.message}")
       end
 
       respond_to do |format|
-        format.html { redirect_to root_path, notice: "Devis créé." }
+        format.html do
+          if mail_delivery_failed
+            redirect_to root_path, alert: "Devis créé, mais l'envoi email a échoué. Merci de nous contacter directement à qualite@stafotel.com."
+          else
+            redirect_to root_path, notice: "Devis créé."
+          end
+        end
         format.json { render json: @quote, status: :created }
       end
     else

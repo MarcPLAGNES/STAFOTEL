@@ -41,6 +41,23 @@ Rails.application.configure do
   # Devise links (password reset/confirmation) use this host in dev
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.smtp_settings = {
+      address: ENV["SMTP_ADDRESS"],
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV.fetch("SMTP_DOMAIN", "stafotel.com"),
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: ENV.fetch("SMTP_AUTHENTICATION", "plain").to_sym,
+      enable_starttls_auto: ENV.fetch("SMTP_ENABLE_STARTTLS_AUTO", "true") == "true"
+    }
+  else
+    config.action_mailer.delivery_method = :test
+    config.action_mailer.perform_deliveries = false
+  end
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
