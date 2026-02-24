@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # Pages publiques
   root "pages#home"
+  get "/sitemap.xml", to: "pages#sitemap", defaults: { format: "xml" }, as: :sitemap
   get "/jobs", to: "pages#jobs"
   get "/company", to: "pages#company"
   get "/tips", to: "pages#tips"

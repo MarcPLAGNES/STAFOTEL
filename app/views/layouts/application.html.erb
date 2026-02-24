@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Stafotel</title>
+    <title><%= meta_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <meta name="description" content="<%= meta_description %>">
+    <link rel="canonical" href="<%= canonical_url %>">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="STAFOTEL">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="<%= meta_title %>">
+    <meta property="og:description" content="<%= meta_description %>">
+    <meta property="og:image" content="<%= meta_image_url %>">
+    <meta property="og:url" content="<%= canonical_url %>">
+
+    <% if facebook_page.present? %>
+      <meta property="article:publisher" content="<%= facebook_page %>">
+      <link rel="me" href="<%= facebook_page %>">
+    <% end %>
+    <% if instagram_profile.present? %>
+      <link rel="me" href="<%= instagram_profile %>">
+    <% end %>
+
+    <script type="application/ld+json">
+      <%= raw(local_business_schema.to_json) %>
+    </script>
 
     <meta charset="UTF-8">
 

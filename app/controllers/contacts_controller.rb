@@ -2,6 +2,9 @@ class ContactsController < ApplicationController
   # Protection anti-spam (optionnel: ajouter gem 'rack-attack')
 
   def new
+    @meta_title = "Contact nettoyage et intérim hôtelier"
+    @meta_description = "Contactez STAFOTEL pour vos besoins en nettoyage professionnel, sous-traitance ou intérim hôtelier."
+
     @contact = Contact.new
   end
 
