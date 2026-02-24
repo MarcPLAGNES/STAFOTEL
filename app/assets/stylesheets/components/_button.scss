@@ -61,6 +61,24 @@
   left: 550px;
 }
 
+@media (max-width: 768px) {
+  .button-container {
+    top: auto;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-container .btn-flat {
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    box-sizing: border-box;
+  }
+}
+
 .button-before-footer {
 display: flex;
 justify-content: center;

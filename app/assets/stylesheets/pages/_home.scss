@@ -479,7 +479,8 @@
 .banner .container {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
+  max-width: 680px;
   margin-left: 0 !important;
   margin-right: auto !important;
 }
@@ -537,12 +538,54 @@
     font: bold;
     padding-left: 40px;
     padding-right: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .banner .container {
+    max-width: 100%;
+  }
+
+  .banner p {
+    max-width: 100%;
+    padding-left: 0;
+    font-size: 1.1rem;
+  }
 }
 
 .banner-subtitle {
   font-size: 0.9rem !important;
   margin-top: -5px !important;
   margin-bottom: 30px !important;
+}
+
+.why-us-section {
+  .cards {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .card-trip.card-icon {
+    flex: 1 1 260px;
+    max-width: 320px;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .why-us-section {
+    .cards {
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .card-trip.card-icon {
+      width: calc(100% - 24px);
+      max-width: 420px;
+      margin: 0;
+    }
+  }
 }
 
 .box h2,
