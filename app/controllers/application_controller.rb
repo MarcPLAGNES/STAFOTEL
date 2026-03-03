@@ -10,6 +10,5 @@ class ApplicationController < ActionController::Base
   def set_security_headers
     response.headers['X-Frame-Options'] = 'SAMEORIGIN'
     response.headers['X-Content-Type-Options'] = 'nosniff'
-    response.headers['X-XSS-Protection'] = '1; mode=block'
   end
 end

@@ -13,7 +13,7 @@
   <% end %>
 </div>
 
-<script>
+<%= javascript_tag nonce: true do %>
   document.addEventListener('turbo:load', () => {
     document.querySelectorAll('.flash-container .alert').forEach((alert) => {
       setTimeout(() => {
@@ -23,4 +23,4 @@
       }, 4000);
     });
   });
-</script>
+<% end %>

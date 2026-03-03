@@ -31,10 +31,10 @@ Rails.application.configure do
     # policy.report_uri "/csp-violation-report-endpoint"
   end
 
-  # Generate session nonces for permitted importmap, inline scripts, and inline styles.
-  config.content_security_policy_nonce_generator = ->(request) { request.session.id.to_s }
+  # Generate random nonces for permitted importmap, inline scripts, and inline styles.
+  config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w(script-src style-src)
 
-  # Report violations without enforcing the policy (safe mode for testing)
-  config.content_security_policy_report_only = true
+  # Enforce the policy in production.
+  config.content_security_policy_report_only = false
 end
