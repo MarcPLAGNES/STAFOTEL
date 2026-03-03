@@ -6,17 +6,21 @@
   <%= f.input :reset_password_token, as: :hidden %>
   <%= f.full_error :reset_password_token %>
 
-  <div class="form-inputs">
+  <div class="form-inputs" data-controller="password-toggle">
     <%= f.input :password,
                 label: "New password",
                 required: true,
                 autofocus: true,
                 hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { autocomplete: "new-password", data: { password_toggle_target: "input" } } %>
     <%= f.input :password_confirmation,
                 label: "Confirm your new password",
                 required: true,
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { autocomplete: "new-password", data: { password_toggle_target: "input" } } %>
+    <div class="form-check mt-2 mb-3">
+      <input class="form-check-input" type="checkbox" id="show-passwords-reset" data-action="password-toggle#toggle">
+      <label class="form-check-label" for="show-passwords-reset">Show passwords</label>
+    </div>
   </div>
 
   <div class="form-actions">

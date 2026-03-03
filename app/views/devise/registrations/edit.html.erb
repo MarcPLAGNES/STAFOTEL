@@ -3,7 +3,7 @@
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-inputs" data-controller="password-toggle">
     <%= f.input :email, required: true, autofocus: true %>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -13,14 +13,18 @@
     <%= f.input :password,
                 hint: "leave it blank if you don't want to change it",
                 required: false,
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { autocomplete: "new-password", data: { password_toggle_target: "input" } } %>
     <%= f.input :password_confirmation,
                 required: false,
-                input_html: { autocomplete: "new-password" } %>
+                input_html: { autocomplete: "new-password", data: { password_toggle_target: "input" } } %>
     <%= f.input :current_password,
                 hint: "we need your current password to confirm your changes",
                 required: true,
-                input_html: { autocomplete: "current-password" } %>
+                input_html: { autocomplete: "current-password", data: { password_toggle_target: "input" } } %>
+    <div class="form-check mt-2 mb-3">
+      <input class="form-check-input" type="checkbox" id="show-passwords-account-edit" data-action="password-toggle#toggle">
+      <label class="form-check-label" for="show-passwords-account-edit">Show passwords</label>
+    </div>
   </div>
 
   <div class="form-actions">

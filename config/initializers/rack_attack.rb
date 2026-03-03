@@ -10,9 +10,13 @@ class Rack::Attack
     req.ip unless req.path.start_with?("/assets")
   end
 
-  # Throttle login attempts: 10 per 5 minutes per IP
-  throttle("logins/ip", limit: 10, period: 5.minutes) do |req|
-    req.ip if req.path == "/users/sign_in" && req.post?
+  # Throttle login attempts: 30 per 5 minutes per IP+email
+  # Avoids blocking all users when the app is behind a reverse proxy/shared IP.
+  throttle("logins/ip_email", limit: 30, period: 5.minutes) do |req|
+    if req.path == "/users/sign_in" && req.post?
+      email = req.params.dig("user", "email").to_s.strip.downcase
+      "#{req.ip}:#{email}" if email.present?
+    end
   end
 
   # Throttle login attempts by email: 10 per 5 minutes per email
