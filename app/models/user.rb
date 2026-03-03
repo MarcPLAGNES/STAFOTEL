@@ -12,7 +12,22 @@ class User < ApplicationRecord
   has_many :appointments, through: :contacts
 
   def admin?
-    configured_admin_email = Rails.application.credentials.dig(:stafotel, :admin_email) || ENV["STAFOTEL_ADMIN_EMAIL"] || "qualite@stafotel.com"
-    email.to_s.strip.downcase == configured_admin_email.to_s.strip.downcase
+    admin_emails = []
+
+    credentials_admin_email = Rails.application.credentials.dig(:stafotel, :admin_email)
+    admin_emails << credentials_admin_email if credentials_admin_email.present?
+
+    env_admin_email = ENV["STAFOTEL_ADMIN_EMAIL"]
+    admin_emails << env_admin_email if env_admin_email.present?
+
+    env_admin_emails = ENV["STAFOTEL_ADMIN_EMAILS"]
+    if env_admin_emails.present?
+      admin_emails.concat(env_admin_emails.split(","))
+    end
+
+    admin_emails.concat(["qualite@stafotel.com", "admin@stafotel.com"])
+
+    normalized_admin_emails = admin_emails.map { |value| value.to_s.strip.downcase }.reject(&:blank?).uniq
+    normalized_admin_emails.include?(email.to_s.strip.downcase)
   end
 end
