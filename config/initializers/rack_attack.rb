@@ -41,9 +41,9 @@ class Rack::Attack
   end
 
   # Response when throttled
-  self.throttled_response = lambda do |env|
+  self.throttled_responder = lambda do |req|
+    env = req.env
     retry_after = (env["RateLimit-Reset"].to_i - Time.now.to_i).abs
-    req = Rack::Request.new(env)
     Rails.logger.warn({
       source: "rack-attack",
       event: "throttled",
