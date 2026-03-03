@@ -19,18 +19,18 @@
       </div>
     </div>
 
-    <button class="carousel-control-prev" type="button" onclick="scrollJobs(-1)">
+    <button class="carousel-control-prev js-scroll-jobs" data-direction="-1" type="button">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" onclick="scrollJobs(1)">
+    <button class="carousel-control-next js-scroll-jobs" data-direction="1" type="button">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
 </div>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 // Tableau de tous les jobs avec les vrais noms d'images
 const allJobs = [
   {
@@ -97,6 +97,15 @@ function scrollJobs(direction) {
 // Initialiser l'affichage au chargement
 document.addEventListener('turbo:load', function() {
   renderJobs();
+
+  document.querySelectorAll('.js-scroll-jobs').forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.addEventListener('click', () => {
+      scrollJobs(Number(button.dataset.direction || 0));
+    });
+    button.dataset.bound = 'true';
+  });
+
   if (!window.__jobsResizeBound) {
     window.addEventListener('resize', renderJobs);
     window.__jobsResizeBound = true;
@@ -211,6 +220,22 @@ document.addEventListener('turbo:load', function() {
     renderServices();
   }, 50);
 
+  document.querySelectorAll('.js-scroll-services').forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.addEventListener('click', () => {
+      scrollServices(Number(button.dataset.direction || 0));
+    });
+    button.dataset.bound = 'true';
+  });
+
+  document.querySelectorAll('.js-scroll-tips').forEach((button) => {
+    if (button.dataset.bound === 'true') return;
+    button.addEventListener('click', () => {
+      scrollTips(Number(button.dataset.direction || 0));
+    });
+    button.dataset.bound = 'true';
+  });
+
   if (!window.__tipsResizeBound) {
     window.addEventListener('resize', renderTips);
     window.__tipsResizeBound = true;
@@ -229,11 +254,11 @@ document.addEventListener('turbo:load', function() {
     <div class="carousel-container">
       <div class="cards d-flex justify-content-center" id="service-cards-wrapper"></div>
     </div>
-    <button class="carousel-control-prev" type="button" onclick="scrollServices(-1)">
+    <button class="carousel-control-prev js-scroll-services" data-direction="-1" type="button">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" onclick="scrollServices(1)">
+    <button class="carousel-control-next js-scroll-services" data-direction="1" type="button">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -263,7 +288,7 @@ document.addEventListener('turbo:load', function() {
   </div>
 </section>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
   console.log('Script carte chargé');
   document.addEventListener('turbo:load', function() {
     console.log('turbo:load - carte');
@@ -465,11 +490,11 @@ document.addEventListener('turbo:load', function() {
       </div>
     </div>
 
-    <button class="carousel-control-prev" type="button" onclick="scrollTips(-1)">
+    <button class="carousel-control-prev js-scroll-tips" data-direction="-1" type="button">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" onclick="scrollTips(1)">
+    <button class="carousel-control-next js-scroll-tips" data-direction="1" type="button">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>

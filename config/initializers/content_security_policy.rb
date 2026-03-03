@@ -6,26 +6,28 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-    # Default: only self for most resources
-    policy.default_src :self, :https
+    # Default: only self.
+    policy.default_src :self
 
-    # Allow scripts from self and trusted CDNs
-    policy.script_src :self, :https, "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"
+    # Scripts: self + trusted CDNs. Inline scripts must use a nonce.
+    policy.script_src :self, "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"
 
-    # Allow styles from self, trusted CDNs, and Google Fonts
-    policy.style_src :self, :https, "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"
+    # Styles: keep unsafe-inline temporarily due many inline style attributes in views.
+    policy.style_src :self, :unsafe_inline, "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com", "https://cdn.jsdelivr.net"
 
-    # Allow fonts from self, Google Fonts, and data URIs
-    policy.font_src :self, :https, :data, "https://fonts.gstatic.com"
+    # Fonts
+    policy.font_src :self, :data, "https://fonts.gstatic.com"
 
-    # Allow images from self, HTTPS sources, data URIs, and blob URLs
+    # Images
     policy.img_src :self, :https, :data, :blob
 
-    # Disable plugins
-    policy.object_src :none
-
-    # Only allow HTTPS connections
+    # Connections (AJAX/WebSocket)
     policy.connect_src :self, :https
+
+    # Additional hardening
+    policy.base_uri :self
+    policy.frame_ancestors :self
+    policy.object_src :none
 
     # Specify URI for violation reports
     # policy.report_uri "/csp-violation-report-endpoint"
@@ -35,6 +37,6 @@ Rails.application.configure do
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w(script-src style-src)
 
-  # Keep report-only until all external image/style/script sources are fully whitelisted.
-  config.content_security_policy_report_only = true
+  # Enforce policy.
+  config.content_security_policy_report_only = false
 end

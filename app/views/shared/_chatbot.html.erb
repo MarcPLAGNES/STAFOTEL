@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<script>
+<script nonce="<%= content_security_policy_nonce %>">
 function initChatbot() {
   const toggle = document.getElementById('chatbot-toggle');
   const chatWindow = document.getElementById('chatbot-window');
@@ -202,7 +202,7 @@ document.addEventListener('turbo:load', initChatbot);
 document.addEventListener('turbo:render', initChatbot);
 </script>
 
-<style>
+<style nonce="<%= content_security_policy_nonce %>">
 #chatbot-widget {
   position: fixed;
   bottom: 20px;
