@@ -18,8 +18,8 @@ Rails.application.configure do
     # Allow fonts from self, Google Fonts, and data URIs
     policy.font_src :self, :https, :data, "https://fonts.gstatic.com"
 
-    # Allow images from self, data URIs, and HTTPS sources
-    policy.img_src :self, :https, :data
+    # Allow images from self, HTTPS sources, data URIs, and blob URLs
+    policy.img_src :self, :https, :data, :blob
 
     # Disable plugins
     policy.object_src :none
@@ -35,6 +35,6 @@ Rails.application.configure do
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w(script-src style-src)
 
-  # Enforce the policy in production.
-  config.content_security_policy_report_only = false
+  # Keep report-only until all external image/style/script sources are fully whitelisted.
+  config.content_security_policy_report_only = true
 end
