@@ -35,8 +35,8 @@ Rails.application.configure do
 
   # Generate random nonces for permitted importmap, inline scripts, and inline styles.
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
-  config.content_security_policy_nonce_directives = %w(script-src style-src)
+  config.content_security_policy_nonce_directives = %w(script-src)
 
-  # Enforce policy.
-  config.content_security_policy_report_only = false
+  # Temporary: report-only to avoid production regressions (footer/chatbot) while collecting violations.
+  config.content_security_policy_report_only = true
 end
