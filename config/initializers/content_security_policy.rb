@@ -5,6 +5,8 @@
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
 
 Rails.application.configure do
+  csp_report_only = ENV.fetch("CSP_REPORT_ONLY", "true") == "true"
+
   config.content_security_policy do |policy|
     # Default: only self.
     policy.default_src :self
@@ -30,13 +32,13 @@ Rails.application.configure do
     policy.object_src :none
 
     # Specify URI for violation reports
-    # policy.report_uri "/csp-violation-report-endpoint"
+    policy.report_uri "/csp-violation-report"
   end
 
   # Generate random nonces for permitted importmap, inline scripts, and inline styles.
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w(script-src)
 
-  # Temporary: report-only to avoid production regressions (footer/chatbot) while collecting violations.
-  config.content_security_policy_report_only = true
+  # Progressive rollout: keep report-only by default, switch to strict with CSP_REPORT_ONLY=false.
+  config.content_security_policy_report_only = csp_report_only
 end
