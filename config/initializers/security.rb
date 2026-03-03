@@ -17,13 +17,14 @@ Rails.application.config.to_prepare do
 end
 
 # Configuration des sessions sécurisées
-Rails.application.config.session_store :cookie_store,
-  key: '_stafotel_session',
-  secure: Rails.env.production?,  # Cookies HTTPS uniquement en production
-  httponly: true,                  # Pas d'accès JavaScript
-  same_site: :lax                  # Protection CSRF
+# NOTE: ne pas réécrire `session_options` après `session_store`, sinon certaines
+# options (clé, secure, same_site, etc.) peuvent être perdues selon l'ordre de chargement.
+cookie_domain = ENV["APP_COOKIE_DOMAIN"].presence
 
-# Expiration des sessions après 2 semaines d'inactivité
-Rails.application.config.session_options = {
-  expire_after: 2.weeks
-}
+Rails.application.config.session_store :cookie_store,
+  key: "_stafotel_session",
+  secure: Rails.env.production?,   # Cookies HTTPS uniquement en production
+  httponly: true,                  # Pas d'accès JavaScript
+  same_site: :lax,                 # Protection CSRF
+  expire_after: 2.weeks,           # Expiration après 2 semaines d'inactivité
+  domain: cookie_domain
