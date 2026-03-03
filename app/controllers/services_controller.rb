@@ -8,7 +8,7 @@ class ServicesController < ApplicationController
 
 	def show
 		@service = Service.find(params[:id])
-		service_name = @service.title.presence || "Service de nettoyage"
+		service_name = @service.name.presence || "Service de nettoyage"
 		@meta_title = "#{service_name}"
 		@meta_description = "Découvrez notre service #{service_name.downcase} avec STAFOTEL: intervention professionnelle, qualité et réactivité."
 	end

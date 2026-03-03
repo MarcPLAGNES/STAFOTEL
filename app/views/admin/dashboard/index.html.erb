@@ -1,0 +1,136 @@
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+    <h1 class="mb-0">Espace Admin — Demandes reçues</h1>
+    <div class="d-flex flex-wrap gap-2">
+      <%= button_to "Supprimer les tests",
+                    admin_clear_test_data_path,
+                    method: :delete,
+                    class: "btn btn-outline-danger",
+                    form: { data: { turbo_confirm: "Supprimer toutes les données de test détectées ?" } } %>
+
+      <%= button_to "Tout supprimer",
+                    admin_clear_all_data_path,
+                    method: :delete,
+                    class: "btn btn-danger",
+                    form: { data: { turbo_confirm: "Attention : cette action supprime toutes les demandes (devis, candidatures, contacts, rendez-vous). Continuer ?" } } %>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-1">Devis</h5>
+          <p class="display-6 mb-0"><%= Quote.count %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-1">Candidatures</h5>
+          <p class="display-6 mb-0"><%= Application.count %></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-1">Contacts</h5>
+          <p class="display-6 mb-0"><%= Contact.count %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-semibold">Dernières demandes de devis</div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Service</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @quotes.each do |quote| %>
+            <tr>
+              <td><%= l(quote.created_at, format: :short) %></td>
+              <td><%= quote.service&.name %></td>
+              <td><%= [quote.contact&.firstname, quote.contact&.lastname].compact.join(" ") %></td>
+              <td><%= quote.contact&.email %></td>
+              <td><%= quote.status %></td>
+            </tr>
+          <% end %>
+          <% if @quotes.empty? %>
+            <tr><td colspan="5" class="text-center text-muted">Aucune demande de devis pour le moment.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-semibold">Dernières candidatures</div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Métier</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @applications.each do |application| %>
+            <tr>
+              <td><%= l(application.created_at, format: :short) %></td>
+              <td><%= application.job&.title %></td>
+              <td><%= [application.contact&.firstname, application.contact&.lastname].compact.join(" ") %></td>
+              <td><%= application.contact&.email %></td>
+              <td><%= application.status %></td>
+            </tr>
+          <% end %>
+          <% if @applications.empty? %>
+            <tr><td colspan="5" class="text-center text-muted">Aucune candidature pour le moment.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-light fw-semibold">Derniers contacts enregistrés</div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @contacts.each do |contact| %>
+            <tr>
+              <td><%= l(contact.created_at, format: :short) %></td>
+              <td><%= [contact.firstname, contact.lastname].compact.join(" ") %></td>
+              <td><%= contact.email %></td>
+              <td><%= contact.phone %></td>
+            </tr>
+          <% end %>
+          <% if @contacts.empty? %>
+            <tr><td colspan="4" class="text-center text-muted">Aucun contact pour le moment.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

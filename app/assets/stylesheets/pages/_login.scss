@@ -149,3 +149,21 @@
     }
   }
 }
+
+.login-box {
+  .hint {
+    display: block;
+    margin-top: -10px;
+    margin-bottom: 12px;
+    color: #777;
+    font-size: 0.82rem;
+    font-family: 'Georgia', serif;
+  }
+
+  .invalid-feedback,
+  .error_notification {
+    color: #a33a3a;
+    font-family: 'Georgia', serif;
+    margin-bottom: 14px;
+  }
+}

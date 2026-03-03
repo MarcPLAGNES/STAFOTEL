@@ -1,11 +1,19 @@
 class QuotesController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :show, :update_status]
-  before_action :set_quote, only: [:show, :update_status]
-  before_action :authorize_quote_owner!, only: [:show, :update_status]
+  before_action :authenticate_user!, only: [:index, :show, :update_status, :destroy]
+  before_action :set_quote, only: [:show, :update_status, :destroy]
+  before_action :authorize_quote_owner!, only: [:show, :update_status, :destroy]
 
   def index
-    # L'utilisateur ne voit QUE ses propres devis
-    @quotes = current_user.quotes
+    if current_user.admin?
+      @quotes = Quote
+        .includes(:service, :contact)
+        .joins(:contact)
+        .where("contacts.user_id IS NULL OR contacts.user_id != ?", current_user.id)
+        .order(created_at: :desc)
+    else
+      # L'utilisateur ne voit QUE ses propres devis
+      @quotes = current_user.quotes.order(created_at: :desc)
+    end
   end
 
   def show
@@ -146,6 +154,16 @@ class QuotesController < ApplicationController
     end
   end
 
+  def destroy
+    unless current_user.admin?
+      redirect_to quotes_path, alert: "Action non autorisée."
+      return
+    end
+
+    @quote.destroy
+    redirect_to quotes_path, notice: "Demande de devis supprimée."
+  end
+
   private
 
   def set_quote
@@ -155,6 +173,8 @@ class QuotesController < ApplicationController
   end
 
   def authorize_quote_owner!
+    return if current_user.admin?
+
     # Vérifier que le contact du devis appartient à l'utilisateur
     unless @quote.contact.user == current_user
       redirect_to root_path, alert: "Vous n'êtes pas autorisé à accéder à ce devis."

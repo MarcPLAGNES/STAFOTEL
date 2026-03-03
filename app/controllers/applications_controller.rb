@@ -1,11 +1,19 @@
 class ApplicationsController < ApplicationController
-  before_action :authenticate_user!, only: [:index, :show, :update_status]
-  before_action :set_application, only: [:show, :update_status]
-  before_action :authorize_application_owner!, only: [:show, :update_status]
+  before_action :authenticate_user!, only: [:index, :show, :update_status, :destroy]
+  before_action :set_application, only: [:show, :update_status, :destroy]
+  before_action :authorize_application_owner!, only: [:show, :update_status, :destroy]
 
   def index
-    # L'utilisateur ne voit QUE ses propres candidatures
-    @applications = current_user.applications
+    if current_user.admin?
+      @applications = Application
+        .includes(:job, :contact)
+        .joins(:contact)
+        .where("contacts.user_id IS NULL OR contacts.user_id != ?", current_user.id)
+        .order(created_at: :desc)
+    else
+      # L'utilisateur ne voit QUE ses propres candidatures
+      @applications = current_user.applications.order(created_at: :desc)
+    end
   end
 
   def show
@@ -40,6 +48,16 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  def destroy
+    unless current_user.admin?
+      redirect_to applications_path, alert: "Action non autorisée."
+      return
+    end
+
+    @application.destroy
+    redirect_to applications_path, notice: "Candidature supprimée."
+  end
+
   private
 
   def set_application
@@ -49,6 +67,8 @@ class ApplicationsController < ApplicationController
   end
 
   def authorize_application_owner!
+    return if current_user.admin?
+
     unless @application.contact.user == current_user
       redirect_to root_path, alert: "Vous n'êtes pas autorisé à accéder à cette candidature."
     end

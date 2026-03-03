@@ -1,2 +1,68 @@
-<h1>Candidatures</h1>
-<p>Liste des candidatures.</p>
+<div class="quotes-list-page applications-list-page">
+	<div class="quotes-list-container">
+		<div class="quotes-list-header">
+			<% if current_user.admin? %>
+				<h1>Candidatures clients</h1>
+				<p>Suivez ici les candidatures reçues de vos candidats.</p>
+			<% else %>
+				<h1>Mes candidatures</h1>
+				<p>Retrouvez ici vos candidatures et leur statut.</p>
+			<% end %>
+		</div>
+
+		<% if @applications.any? %>
+			<div class="quotes-table-wrap">
+				<table class="quotes-table">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>Date</th>
+							<th>Métier</th>
+							<th>Statut</th>
+							<th class="text-end">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @applications.each do |application| %>
+							<tr>
+								<td>#<%= application.id %></td>
+								<td><%= l(application.created_at, format: :short) %></td>
+								<td><%= application.job&.title || "Métier" %></td>
+								<td>
+									<span class="quote-status quote-status-<%= application.status %>">
+										<% case application.status
+											 when "pending" %>En attente
+										<% when "accepted" %>Acceptée
+										<% when "rejected", "refused" %>Refusée
+										<% else %>
+											<%= application.status.to_s.humanize %>
+										<% end %>
+									</span>
+								</td>
+								<td class="text-end">
+									<%= link_to "Voir", application_path(application), class: "btn btn-quote-view" %>
+									<% if current_user.admin? %>
+										<%= link_to "Supprimer",
+											application_path(application),
+											data: { turbo_method: :delete, turbo_confirm: "Supprimer cette candidature ?" },
+											class: "btn btn-quote-delete" %>
+									<% end %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		<% else %>
+			<div class="quotes-empty-state">
+				<% if current_user.admin? %>
+					<h3>Aucune candidature reçue pour le moment</h3>
+					<p>Les nouvelles candidatures apparaîtront ici automatiquement.</p>
+				<% else %>
+					<h3>Aucune candidature pour le moment</h3>
+					<p>Vous n'avez pas encore envoyé de candidature.</p>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+</div>

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resources :quotes, only: [:new, :create], shallow: true
   end
 
-  resources :quotes, only: [:index, :show] do
+  resources :quotes, only: [:index, :show, :destroy] do
     patch :update_status, on: :member
     resources :appointments, only: [:create], shallow: true
   end
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     resources :applications, only: [:new, :create], shallow: true
   end
 
-  resources :applications, only: [:index, :show] do
+  resources :applications, only: [:index, :show, :destroy] do
     patch :update_status, on: :member
   end
 
@@ -49,11 +49,8 @@ Rails.application.routes.draw do
   # Back-office (compagnie)
   namespace :admin do
     root "dashboard#index"
-    resources :quotes
-    resources :applications
-    resources :appointments
-    resources :services
-    resources :jobs
-    resources :contacts
+    get :demandes, to: "dashboard#index"
+    delete :clear_test_data, to: "dashboard#clear_test_data"
+    delete :clear_all_data, to: "dashboard#clear_all_data"
   end
 end

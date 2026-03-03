@@ -1,2 +1,70 @@
-<h1>Devis</h1>
-<p>Liste des devis.</p>
+<div class="quotes-list-page">
+	<div class="quotes-list-container">
+		<div class="quotes-list-header">
+			<% if current_user.admin? %>
+				<h1>Demandes clients</h1>
+				<p>Suivez ici les demandes de devis envoyées par vos clients.</p>
+			<% else %>
+				<h1>Mes demandes de devis</h1>
+				<p>Retrouvez ici l'historique de vos demandes et leur statut.</p>
+				<%= link_to "Demander un nouveau devis", services_path, class: "btn btn-new-quote" %>
+			<% end %>
+		</div>
+
+		<% if @quotes.any? %>
+			<div class="quotes-table-wrap">
+				<table class="quotes-table">
+					<thead>
+						<tr>
+							<th>N°</th>
+							<th>Date</th>
+							<th>Service</th>
+							<th>Statut</th>
+							<th class="text-end">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @quotes.each do |quote| %>
+							<tr>
+								<td>#<%= quote.id %></td>
+								<td><%= l(quote.created_at, format: :short) %></td>
+								<td><%= quote.service&.name || "Service" %></td>
+								<td>
+									<span class="quote-status quote-status-<%= quote.status %>">
+										<% case quote.status
+											 when "pending" %>En attente
+										<% when "accepted" %>Accepté
+										<% when "rejected", "refused" %>Refusé
+										<% else %>
+											<%= quote.status.to_s.humanize %>
+										<% end %>
+									</span>
+								</td>
+								<td class="text-end">
+									<%= link_to "Voir", quote_path(quote), class: "btn btn-quote-view" %>
+									<% if current_user.admin? %>
+										<%= link_to "Supprimer",
+											quote_path(quote),
+											data: { turbo_method: :delete, turbo_confirm: "Supprimer cette demande de devis ?" },
+											class: "btn btn-quote-delete" %>
+									<% end %>
+								</td>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		<% else %>
+			<div class="quotes-empty-state">
+				<% if current_user.admin? %>
+					<h3>Aucune demande client pour le moment</h3>
+					<p>Les nouvelles demandes de devis apparaîtront ici automatiquement.</p>
+				<% else %>
+					<h3>Aucun devis pour le moment</h3>
+					<p>Vous n'avez pas encore effectué de demande de devis.</p>
+					<%= link_to "Découvrir nos services", services_path, class: "btn btn-new-quote" %>
+				<% end %>
+			</div>
+		<% end %>
+	</div>
+</div>
