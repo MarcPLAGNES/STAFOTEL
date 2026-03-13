@@ -44,7 +44,24 @@
             Vos informations
           </h3>
           <div class="form-group">
-            <p class="form-hint">Votre message sera envoyé directement à notre équipe.</p>
+            <label for="application_contact_firstname">Prénom <span class="required">*</span></label>
+            <%= text_field_tag "application[contact_firstname]", nil, id: "application_contact_firstname", class: "form-input", required: true, placeholder: "Votre prénom" %>
+          </div>
+
+          <div class="form-group">
+            <label for="application_contact_lastname">Nom <span class="required">*</span></label>
+            <%= text_field_tag "application[contact_lastname]", nil, id: "application_contact_lastname", class: "form-input", required: true, placeholder: "Votre nom" %>
+          </div>
+
+          <div class="form-group">
+            <label for="application_contact_email">Email <span class="required">*</span></label>
+            <%= email_field_tag "application[contact_email]", nil, id: "application_contact_email", class: "form-input", required: true, placeholder: "vous@exemple.com" %>
+          </div>
+
+          <div class="form-group">
+            <label for="application_contact_phone">Téléphone <span class="required">*</span></label>
+            <%= telephone_field_tag "application[contact_phone]", nil, id: "application_contact_phone", class: "form-input", required: true, placeholder: "06 00 00 00 00" %>
+            <small class="form-hint">Votre message sera envoyé directement à notre équipe.</small>
           </div>
         </div>
 
@@ -66,8 +83,6 @@
         </div>
 
         <%= f.hidden_field :job_id, value: @job.id %>
-        <%= f.hidden_field :status, value: "pending" %>
-        <%= f.hidden_field :contact_id, value: @admin_contact&.id %>
 
         <div class="form-actions">
           <%= f.submit "Envoyer ma candidature", class: "btn-primary" %>

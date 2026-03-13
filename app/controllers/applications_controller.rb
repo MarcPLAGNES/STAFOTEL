@@ -23,17 +23,48 @@ class ApplicationsController < ApplicationController
   def new
     @job = Job.find(params[:job_id])
     @application = Application.new(job: @job)
-    ensure_admin_contact
-    @admin_contact = Contact.find_by(email: admin_email)
   end
 
   def update_status
     head :ok
   end
+
   def create
-    ensure_admin_contact
-    admin_contact = Contact.find_by(email: admin_email)
-    @application = Application.new(application_params.merge(contact_id: admin_contact&.id, status: "pending"))
+    application_input = params.require(:application)
+    normalized_email = application_input[:contact_email].to_s.strip.downcase
+
+    @contact = Contact
+      .where(user_id: current_user&.id)
+      .where("LOWER(TRIM(email)) = ?", normalized_email)
+      .first
+
+    if @contact.present?
+      @contact.assign_attributes(
+        firstname: application_input[:contact_firstname].presence || @contact.firstname,
+        lastname: application_input[:contact_lastname].presence || @contact.lastname,
+        phone: application_input[:contact_phone].presence || @contact.phone
+      )
+    else
+      @contact = Contact.new(
+        user: current_user,
+        email: normalized_email,
+        firstname: application_input[:contact_firstname],
+        lastname: application_input[:contact_lastname],
+        phone: application_input[:contact_phone]
+      )
+    end
+
+    unless @contact.save
+      respond_to do |format|
+        format.html { redirect_to job_path(application_input[:job_id]), alert: @contact.errors.full_messages.to_sentence }
+        format.json { render json: { errors: @contact.errors }, status: :unprocessable_entity }
+      end
+      return
+    end
+
+    @application = Application.new(application_params.merge(status: "pending"))
+    @application.contact = @contact
+
     if @application.save
       ApplicationSubmissionMailer.with(application: @application).new_application.deliver_now
       respond_to do |format|
@@ -76,18 +107,6 @@ class ApplicationsController < ApplicationController
 
   def application_params
     # On ne permet PAS de modifier le status directement (seulement l'admin)
-    params.require(:application).permit(:message, :contact_id, :job_id)
-  end
-
-  def ensure_admin_contact
-    Contact.find_or_create_by!(email: admin_email) do |contact|
-      contact.firstname = "Admin"
-      contact.lastname = "Stafotel"
-      contact.phone = "+33000000000"
-    end
-  end
-
-  def admin_email
-    Rails.application.credentials.dig(:stafotel, :admin_email) || ENV["STAFOTEL_ADMIN_EMAIL"] || "admin@stafotel.com"
+    params.require(:application).permit(:message, :job_id)
   end
 end
