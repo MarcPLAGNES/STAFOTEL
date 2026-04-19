@@ -686,6 +686,12 @@ section + h2,
   }
 }
 
+#jobs-carousel .card-trip h4 {
+  white-space: nowrap;
+  font-size: clamp(0.86rem, 1.5vw, 1rem);
+  letter-spacing: 0;
+}
+
 // Intervention areas section
 .intervention-areas-section {
   background-color: #ffffff;

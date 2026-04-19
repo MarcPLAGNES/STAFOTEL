@@ -5,11 +5,22 @@
 }
 
 .navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+  flex-grow: 1;
 }
 
 .navbar-lewagon .navbar-nav {
-  gap: 32px;
+  gap: 0;
+}
+
+.navbar-lewagon .navbar-guest-links {
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navbar-lewagon .navbar-auth-links {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
 }
 
 .navbar-lewagon .navbar-logo img {
@@ -61,7 +72,10 @@
 }
 
 @media (max-width: 992px) {
-  .navbar-lewagon .navbar-nav {
+  .navbar-lewagon .navbar-guest-links,
+  .navbar-lewagon .navbar-auth-links {
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 12px;
   }
 
