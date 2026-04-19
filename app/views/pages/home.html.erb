@@ -1,15 +1,15 @@
 <div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= asset_path("Img1.webp") %>');">
   <div class="container">
     <h1 data-controller="logo-shine"><%= image_tag("Logo.webp", class: "banner-logo") %></h1>
-    <p><strong>Fournisseur de personnel spécialisé en nettoyage hôtelier et restauration</strong></p>
-    <p class="banner-subtitle">Du personnel qualifié, formé et disponible 7j/7 pour tous vos besoins de nettoyage</p>
+    <p><strong>Pour du personnel spécialisé en hôtelerie et restauration</strong></p>
+    <p class="banner-subtitle">Du personnel qualifié, formé et disponible 7j/7 pour tous vos besoins</p>
   </div>
   <div class="button-container">
     <%= link_to "Demander un devis", services_path, class: "btn btn-flat" %>
   </div>
 </div>
 
-<h2>Découvrez nos métiers</h2>
+<h2>Découvrez nos métiers disponibles</h2>
 
 <div class="box container">
   <div id="jobs-carousel" class="custom-carousel">
@@ -47,7 +47,7 @@ const allJobs = [
   },
   {
     title: '<%= @job3&.title %>',
-    imageSrc: '<%= asset_path("Femme de ménage.webp") %>',
+    imageSrc: '<%= asset_path("Femme et Valet.webp") %>',
     imageClass: 'job-femme-menage',
     path: '<%= job_path(@job3) if @job3 %>'
   },
@@ -56,6 +56,18 @@ const allJobs = [
     imageSrc: '<%= asset_path("Cafetier.webp") %>',
     imageClass: 'job-cafetier',
     path: '<%= job_path(@job4) if @job4 %>'
+  },
+  {
+    title: '<%= @job5&.title %>',
+    imageSrc: '<%= asset_path("Commis de cuisine.webp") %>',
+    imageClass: 'job-commis-cuisine',
+    path: '<%= job_path(@job5) if @job5 %>'
+  },
+  {
+    title: '<%= @job6&.title %>',
+    imageSrc: '<%= asset_path("Réceptionniste.webp") %>',
+    imageClass: 'job-receptionniste',
+    path: '<%= job_path(@job6) if @job6 %>'
   }
 ];
 
@@ -81,9 +93,11 @@ function renderJobs() {
     card.className = 'card-trip';
     card.innerHTML = `
       <div><h4>${job.title}</h4></div>
-      <a href="${job.path}">
-        <img src="${job.imageSrc}" class="d-block w-100 ${job.imageClass}" height="300">
-      </a>
+      <div class="job-image-container">
+        <a href="${job.path}">
+          <img src="${job.imageSrc}" class="d-block w-100 ${job.imageClass}" alt="${job.title}">
+        </a>
+      </div>
     `;
     wrapper.appendChild(card);
   }

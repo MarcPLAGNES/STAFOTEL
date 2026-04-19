@@ -619,6 +619,8 @@ section + h2,
     flex: 0 0 calc(33.333% - 20px);
     max-width: calc(33.333% - 20px);
     min-width: 300px;
+    display: flex;
+    flex-direction: column;
 
     @media (max-width: 768px) {
       flex: 0 0 100%;
@@ -626,27 +628,59 @@ section + h2,
       min-width: 0;
     }
 
-    img {
+    .job-image-container {
       width: 100%;
       height: 300px;
-      object-fit: cover;
-      object-position: center;
+      overflow: hidden;
 
-      // Ajustements spécifiques par image
-      &.job-gouvernant {
-        object-position: center center;
+      a {
+        display: block;
+        width: 100%;
+        height: 100%;
       }
 
-      &.job-linger {
-        object-position: center 20%;
-      }
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
 
-      &.job-femme-menage {
-        object-position: center 25%;
-      }
+        &.job-gouvernant {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
 
-      &.job-cafetier {
-        object-position: center center;
+        &.job-linger {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-femme-menage {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-cafetier {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-commis-cuisine {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-receptionniste {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
       }
     }
   }

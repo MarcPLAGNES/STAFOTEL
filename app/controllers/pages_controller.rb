@@ -3,8 +3,8 @@ class PagesController < ApplicationController
     @meta_title = "Nettoyage professionnel & intérim hôtelier"
     @meta_description = "STAFOTEL accompagne hôtels, bureaux et copropriétés avec des services de nettoyage professionnel et des solutions d'intérim hôtelier fiables et réactives."
 
-    @jobs = Job.limit(4).to_a
-    @job1, @job2, @job3, @job4 = @jobs
+    @jobs = Job.limit(6).to_a
+    @job1, @job2, @job3, @job4, @job5, @job6 = @jobs
     @services = Service.all
     @tips = Tip.limit(6)
   end

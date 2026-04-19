@@ -17,8 +17,10 @@
         job_images = {
           'Cafetier(ère)' => 'Cafetier.webp',
           'Gouvernant(e)' => 'Gouvernant.webp',
-          'Valet/Femme de chambre' => 'Femme de ménage.webp',
-          'Linger(ère)' => 'Linger.webp'
+          'Commis de cuisine' => 'Commis de cuisine.webp',
+          'Valet/Femme de chambre' => 'Femme et Valet.webp',
+          'Linger(ère)' => 'Linger.webp',
+          'Réceptionniste' => 'Réceptionniste.webp'
         }
         image_name = job_images[@job.title] || 'Gouvernant.webp'
       %>
@@ -34,8 +36,10 @@
             job_descriptions = {
               'Cafetier(ère)' => "Le cafetier ou la cafetière assure le service et la préparation des boissons au bar et au café de l'établissement. Ce professionnel veille à offrir une expérience client agréable tout en maintenant des standards de qualité élevés.",
               'Gouvernant(e)' => "Le gouvernant ou la gouvernante supervise l'ensemble du service d'étages et coordonne les équipes de nettoyage. Ce rôle clé garantit la qualité irréprochable des chambres et des espaces communs de l'hôtel.",
+              'Commis de cuisine' => "Le commis de cuisine assiste l'équipe en cuisine dans la préparation, la mise en place et l'envoi des plats. Ce poste demande rapidité, organisation et un vrai sens du travail en équipe.",
               'Valet/Femme de chambre' => "Le valet ou la femme de chambre est responsable de l'entretien quotidien des chambres et de leur préparation pour les clients. Ce métier essentiel demande rigueur, rapidité et un grand souci du détail.",
-              'Linger(ère)' => "Le linger ou la lingère prend en charge la gestion complète du linge de l'établissement : tri, lavage, repassage et rangement. Ce métier requiert organisation, rigueur et respect des normes d'hygiène."
+              'Linger(ère)' => "Le linger ou la lingère prend en charge la gestion complète du linge de l'établissement : tri, lavage, repassage et rangement. Ce métier requiert organisation, rigueur et respect des normes d'hygiène.",
+              'Réceptionniste' => "Le réceptionniste ou la réceptionniste assure l'accueil des clients, la gestion des réservations et la coordination avec les équipes. Ce professionnel veille à offrir une expérience client dès le premier contact et maintient les standards de qualité de l'établissement."
             }
           %>
           <%= job_descriptions[@job.title] || "Découvrez ce métier passionnant dans le secteur de l'hôtellerie et de la restauration." %>

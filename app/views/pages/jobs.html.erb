@@ -10,14 +10,16 @@
             <%= link_to job_path(job) do %>
               <%
                 job_images = {
-                  'Cafetier(ère)' => 'Cafetier.webp',
-                  'Gouvernant(e)' => 'Gouvernant.webp',
-                  'Valet/Femme de chambre' => 'Femme de ménage.webp',
-                  'Linger(ère)' => 'Linger.webp'
+                  'Cafetier(ère)' => { name: 'Cafetier.webp', class: 'job-cafetier' },
+                  'Gouvernant(e)' => { name: 'Gouvernant.webp', class: 'job-gouvernant' },
+                  'Commis de cuisine' => { name: 'Commis de cuisine.webp', class: 'job-commis-cuisine' },
+                  'Valet/Femme de chambre' => { name: 'Femme et Valet.webp', class: 'job-femme-menage' },
+                  'Linger(ère)' => { name: 'Linger.webp', class: 'job-linger' },
+                  'Réceptionniste' => { name: 'Réceptionniste.webp', class: 'job-receptionniste' }
                 }
-                image_name = job_images[job.title] || 'Gouvernant.webp'
+                image_info = job_images[job.title] || { name: 'Gouvernant.webp', class: 'job-gouvernant' }
               %>
-              <%= image_tag(image_name, class: "d-block w-100", height: 300, alt: job.title) %>
+              <%= image_tag(image_info[:name], class: "d-block w-100 #{image_info[:class]}", height: 300, alt: job.title) %>
             <% end %>
           </div>
           <div class="job-content">

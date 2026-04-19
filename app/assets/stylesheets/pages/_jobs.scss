@@ -95,10 +95,47 @@
         object-fit: cover;
         object-position: center;
         transition: transform 0.5s ease;
+
+        // Ajustements spécifiques par image
+        &.job-gouvernant {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-linger {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-femme-menage {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-cafetier {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-commis-cuisine {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-receptionniste {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
       }
 
       &:hover img {
-        transform: scale(1.08);
+        transform: scale(1.02);
       }
     }
   }

@@ -26,6 +26,14 @@ jobs_data = [
   {
     title: "Cafetier(ère)",
     description: "Service et préparation de boissons au bar/café. Expérience souhaitée."
+  },
+  {
+    title: "Commis de cuisine",
+    description: "Préparation, mise en place et assistance en cuisine. Rigueur, rapidité et esprit d'équipe requis."
+  },
+  {
+    title: "Réceptionniste",
+    description: "Accueil des clients, gestion des réservations et coordination avec les équipes. Professionnalisme et courtoisie requis."
   }
 ]
 
