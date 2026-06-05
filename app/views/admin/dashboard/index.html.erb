@@ -41,6 +41,14 @@
         </div>
       </div>
     </div>
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-1">Messages</h5>
+          <p class="display-6 mb-0"><%= @messages.count %></p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card shadow-sm mb-4">
@@ -115,6 +123,7 @@
             <th>Nom</th>
             <th>Email</th>
             <th>Téléphone</th>
+            <th>Message</th>
           </tr>
         </thead>
         <tbody>
@@ -124,10 +133,42 @@
               <td><%= [contact.firstname, contact.lastname].compact.join(" ") %></td>
               <td><%= contact.email %></td>
               <td><%= contact.phone %></td>
+              <td><%= contact.message.presence || "-" %></td>
             </tr>
           <% end %>
           <% if @contacts.empty? %>
-            <tr><td colspan="4" class="text-center text-muted">Aucun contact pour le moment.</td></tr>
+            <tr><td colspan="5" class="text-center text-muted">Aucun contact pour le moment.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4" id="messages">
+    <div class="card-header bg-light fw-semibold">Derniers messages reçus</div>
+    <div class="table-responsive">
+      <table class="table table-striped mb-0">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @messages.each do |message| %>
+            <tr>
+              <td><%= l(message.created_at, format: :short) %></td>
+              <td><%= [message.firstname, message.lastname].compact.join(" ") %></td>
+              <td><%= message.email %></td>
+              <td><%= message.phone %></td>
+              <td><%= truncate(message.message.to_s, length: 120) %></td>
+            </tr>
+          <% end %>
+          <% if @messages.empty? %>
+            <tr><td colspan="5" class="text-center text-muted">Aucun message pour le moment.</td></tr>
           <% end %>
         </tbody>
       </table>

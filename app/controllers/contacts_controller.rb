@@ -27,7 +27,8 @@ class ContactsController < ApplicationController
       @contact.assign_attributes(
         firstname: contact_input[:firstname],
         lastname: contact_input[:lastname],
-        phone: contact_input[:phone]
+        phone: contact_input[:phone],
+        message: contact_input[:message]
       )
     else
       @contact = Contact.new(contact_input)
@@ -36,17 +37,7 @@ class ContactsController < ApplicationController
     end
 
     if @contact.save
-      begin
-        ContactSubmissionMailer.with(
-          contact: @contact,
-          message: params.dig(:contact, :message),
-          recipient_email: recipient_email_for_source
-        ).new_contact.deliver_now
-      rescue StandardError => e
-        Rails.logger.error("Contact mail delivery failed for contact ##{@contact.id}: #{e.class} - #{e.message}")
-      end
-      # TODO: Envoyer un email de confirmation (avec sanitization)
-      redirect_to root_path, notice: "Merci pour votre message ! Nous vous contacterons très prochainement."
+      redirect_to root_path, notice: "Merci pour votre message ! Nous l'avons bien enregistré."
     else
       render :new, status: :unprocessable_entity
     end
@@ -55,13 +46,6 @@ class ContactsController < ApplicationController
   private
 
   def contact_params
-    params.require(:contact).permit(:firstname, :lastname, :email, :phone)
-  end
-
-  def recipient_email_for_source
-    source = params[:source].to_s
-    return "qualite@stafotel.com" if ["interim", "sous_traitance"].include?(source)
-
-    Rails.application.credentials.dig(:stafotel, :admin_email) || ENV["STAFOTEL_ADMIN_EMAIL"] || "admin@stafotel.com"
+    params.require(:contact).permit(:firstname, :lastname, :email, :phone, :message)
   end
 end

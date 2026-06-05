@@ -23,6 +23,7 @@
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <% if current_user.admin? %>
                 <%= link_to "Espace admin", admin_root_path, class: "dropdown-item" %>
+                <%= link_to "Mes messages", admin_root_path(anchor: "messages"), class: "dropdown-item" %>
               <% end %>
               <%= link_to "Mes demandes de devis", quotes_path, class: "dropdown-item" %>
               <%= link_to "Mes candidatures", applications_path, class: "dropdown-item" %>

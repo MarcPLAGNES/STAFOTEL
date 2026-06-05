@@ -621,6 +621,7 @@ section + h2,
     min-width: 300px;
     display: flex;
     flex-direction: column;
+    gap: 12px;
 
     @media (max-width: 768px) {
       flex: 0 0 100%;
@@ -681,6 +682,18 @@ section + h2,
           transform: scale(0.94);
           transform-origin: center center;
         }
+
+        &.job-technicien {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
+
+        &.job-equipier {
+          object-position: center 18%;
+          transform: scale(0.94);
+          transform-origin: center center;
+        }
       }
     }
   }
@@ -690,6 +703,7 @@ section + h2,
   white-space: nowrap;
   font-size: clamp(0.86rem, 1.5vw, 1rem);
   letter-spacing: 0;
+  margin-bottom: 0;
 }
 
 // Intervention areas section

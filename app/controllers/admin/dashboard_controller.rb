@@ -6,6 +6,7 @@ module Admin
       @quotes = Quote.includes(:service, :contact).order(created_at: :desc).limit(20)
       @applications = Application.includes(:job, :contact).order(created_at: :desc).limit(20)
       @contacts = Contact.order(created_at: :desc).limit(20)
+      @messages = Contact.where.not(message: [nil, ""]).order(created_at: :desc).limit(20)
     end
 
     def clear_test_data

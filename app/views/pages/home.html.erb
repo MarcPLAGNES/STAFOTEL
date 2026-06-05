@@ -68,6 +68,18 @@ const allJobs = [
     imageSrc: '<%= asset_path("Réceptionniste.webp") %>',
     imageClass: 'job-receptionniste',
     path: '<%= job_path(@job6) if @job6 %>'
+  },
+  {
+    title: '<%= @job7&.title %>',
+    imageSrc: '<%= asset_path("Technicien.webp") %>',
+    imageClass: 'job-technicien',
+    path: '<%= job_path(@job7) if @job7 %>'
+  },
+  {
+    title: '<%= @job8&.title %>',
+    imageSrc: '<%= asset_path("Equipier.webp") %>',
+    imageClass: 'job-equipier',
+    path: '<%= job_path(@job8) if @job8 %>'
   }
 ];
 
@@ -518,9 +530,9 @@ document.addEventListener('turbo:load', function() {
 <h2>Nos clients</h2>
 <section class="clients-section">
   <div class="clients-logos">
-    <%= image_tag("Partenaire 1.png", alt: "Partenaire 1", class: "partner-logo") %>
+    <%= image_tag("Partenaire 1.webp", alt: "Partenaire 1", class: "partner-logo") %>
     <%= image_tag("Partenaire 2.webp", alt: "Partenaire 2", class: "partner-logo") %>
-    <%= image_tag("Partenaire 3.jpg", alt: "Partenaire 3", class: "partner-logo") %>
+    <%= image_tag("Partenaire 3.webp", alt: "Partenaire 3", class: "partner-logo") %>
     <%= image_tag("Partenaire 4.webp", alt: "Partenaire 4", class: "partner-logo") %>
     <%= image_tag("Partenaire 5.webp", alt: "Partenaire 5", class: "partner-logo") %>
     <%= image_tag("Partenaire 6.webp", alt: "Partenaire 6", class: "partner-logo") %>

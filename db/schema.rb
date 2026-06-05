@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_07_202349) do
+ActiveRecord::Schema[7.1].define(version: 2026_06_05_000200) do
   create_table "applications", force: :cascade do |t|
     t.string "status"
     t.text "message"
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_07_202349) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.text "message"
     t.index ["email", "user_id"], name: "index_contacts_on_email_and_user_id", unique: true
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
